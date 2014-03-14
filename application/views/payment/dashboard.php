@@ -33,7 +33,7 @@
              </a>
         </div> <!-- /.col-md-3 -->
         <div class="col-md-3">
-            <a href="<?php echo site_url('payment/payment_list'); ?>" class="link-dashboard-stat">
+            <a href="<?php echo site_url('payment/lists'); ?>" class="link-dashboard-stat">
                 <div class="dashboard-stat yellow none">
                     <div class="details">
                         <div class="number"><?php lang('payments'); ?></div>
