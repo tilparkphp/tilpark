@@ -10,6 +10,9 @@ class Payment extends CI_Controller {
 	
 	public function add()
 	{
+		$data['cashboxs']	= get_options(array('group'=>'cashbox'), array('default_value'=>'id'));
+		$data['banks'] 		= get_options(array('group'=>'bank'), array('default_value'=>'id'));
+
 		if(isset($_POST['add']) and is_log())
 		{
 			$continue = true;
@@ -31,7 +34,7 @@ class Payment extends CI_Controller {
 				$form['val_2'] = $this->input->post('bank_name');
 				$form['val_3'] = $this->input->post('branch_code');
 				if($form['val_1'] == 'cheque'){$form['val_4'] = $this->input->post('fall_due_on');}
-				if($form['val_1'] == 'cheque'){$form['val_5'] = $this->input->post('checks_serial_no');}
+				if($form['val_1'] == 'cheque'){$form['val_5'] = $this->input->post('cheque_serial_no');}
 				$form['val_int'] = $this->input->post('cahsbox');
 				
 				
@@ -52,14 +55,12 @@ class Payment extends CI_Controller {
 				
 				# odeme hareketi ekle	
 				$form_id = add_form($form);
-				
-				# kasayi tekrar hesapla
-				calc_cahsbox($form['val_int']);
-				
 				if($form_id > 0)
 				{
-					calc_account_balance($form['account_id']);
-					$data['type'] = 'invoice';
+					calc_cahsbox($form['val_int']); // kasa bakiyesini tekrar hesapla
+					calc_account_balance($form['account_id']); // hesap kartinin bakiyesini tekrar hesapla
+					
+					$data['type'] = 'payment';
 					$data['form_id'] = $form_id;
 					$data['account_id'] = $form['account_id'];
 					$data['title'] = get_lang('New Receipt');
@@ -81,15 +82,86 @@ class Payment extends CI_Controller {
 		$this->db->where('status', 1);
 		$this->db->where('type', 'payment');
 		$this->db->order_by('ID', 'DESC');
-		$data['payments'] = $this->db->get('forms')->result_array();
+		$data['forms'] = $this->db->get('forms')->result_array();
 	
 		$this->template->view('payment/lists', $data);	
 	}
 	
-	public function view($payment_id)
+	public function view($form_id)
 	{
-		$data['invoice_id'] = $payment_id;
-		$this->template->view('payment/payment_view',$data);	
+		$data['payment_id'] = $form_id;
+		$data['form'] = get_form($form_id);
+		$data['account'] = get_account($data['form']['account_id']);
+		
+		// meta title
+		$data['meta_title'] = '#'.$form_id.' Kasa Hareketi';
+		
+		
+		
+		if(isset($_POST['update']) and is_log())
+		{
+			$continue = true;
+			$this->form_validation->set_rules('account_id', get_lang('Account Card'), 'required|digits');
+			$this->form_validation->set_rules('account_name', get_lang('Account Name'), 'required|min_length[3]|max_length[50]');
+			$this->form_validation->set_rules('payment', get_lang('Payment'), 'required|number|max_length[12]');
+		
+			if ($this->form_validation->run() == FALSE)
+			{
+				$data['formError'] =  validation_errors();
+			}
+			else
+			{
+				$form['date'] = $this->input->post('date').' '.date('H:i:s');
+				$form['account_id'] = $this->input->post('account_id');
+				$form['description'] = mb_strtoupper($this->input->post('description'), 'utf-8');
+				$form['grand_total'] = $this->input->post('payment');
+				$form['val_1'] = $this->input->post('payment_type');
+				$form['val_2'] = mb_strtoupper($this->input->post('bank_name'), 'utf-8');
+				$form['val_3'] = mb_strtoupper($this->input->post('branch_code'), 'utf-8');
+				if($form['val_1'] == 'cheque'){$form['val_4'] = $this->input->post('fall_due_on');}
+				if($form['val_1'] == 'cheque'){$form['val_5'] = $this->input->post('cheque_serial_no');}
+				$form['val_int'] = $this->input->post('cahsbox'); 
+				
+				
+				// hesap secenekleri
+				$account = get_account($form['account_id']);
+					$form['name'] 			= $account['name'];
+					$form['name_surname'] 	= $account['name_surname'];
+					$form['phone'] 			= $account['phone'];
+					$form['gsm'] 			= $account['gsm'];
+					$form['email'] 			= $account['email'];
+					$form['address'] 		= $account['address'];
+					$form['county'] 		= $account['county'];
+					$form['city'] 			= $account['city'];
+				
+				if(update_form($form_id, $form)) // odeme hareketi guncelle
+				{
+					calc_cahsbox($form['val_int']); // kasa bakiyesini tekrar hesapla
+					calc_account_balance($form['account_id']); // hesap kartinin bakiyesini tekrar hesapla
+					
+					$log['type'] = 'payment';
+					$log['form_id'] = $form_id;
+					$log['account_id'] = $form['account_id'];
+					$log['title'] = 'Güncelleme';
+					$log['description'] = 'Ödeme hareketi güncellendi.';
+					add_log($log);
+					
+					$data['alert']['success'] = get_alertbox('alert-success', 'İşlemler başarılı', 'Kasa hareketi güncellendi.');	
+					
+					# eger guncelle olduysa, verileri tekrar yukleyelim
+					$data['old_form'] = $data['form'];
+					$data['form'] = get_form($form_id);
+					$data['account'] = get_account($data['form']['account_id']);
+					
+					calc_account_balance($data['old_form']['account_id']); // hesap karti degismis ise eski hesap kartinin bakiyesini guncelleyelim
+					
+				}
+				else { alertbox('alert-danger', get_lang('Error!')); }
+			}
+		}
+		
+		
+		$this->template->view('payment/view',$data);	
 	}
 	
 	

@@ -1,7 +1,7 @@
 <?php $users = get_user_array(); ?>
 
 <ol class="breadcrumb">
-  <li class="active"><?php lang('Dashboard'); ?></li>
+  <li class="active">Yönetim</li>
   
 </ol>
 

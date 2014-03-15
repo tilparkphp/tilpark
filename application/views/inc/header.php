@@ -294,7 +294,7 @@ $(document).ready( function() {
                 <div class="liner"></div>
                 
             	<ul class="nav nav-pills nav-stacked nav-bracket">
-                    <li class="active_"><a href="index.html"><i class="fa fa-home"></i> <span>Yönetim Paneli</span></a></li>
+                    <li class="active_"><a href="<?php echo site_url(''); ?>"><i class="fa fa-home"></i> <span>Yönetim Paneli</span></a></li>
                     <li class="nav-parent active_product"><a href="" class="menu-parent"><i class="fa fa-share-square-o"></i> <span>Stok Yönetimi</span> <span class="naviicon"><i class="fa fa-plus"></i></span></a>
                       <ul style="display: none;" class="children">
                         <li><a href="<?php echo site_url('product'); ?>"><i class="fa fa-caret-right"></i> Stok Yönetimi</a></li>
@@ -317,6 +317,14 @@ $(document).ready( function() {
                         <li><a href="<?php echo site_url('form/view/0?out'); ?>"><i class="fa fa-caret-right"></i> Yeni Satış Formu</a></li>
                         <li><a href="<?php echo site_url('form/view/0?in'); ?>"><i class="fa fa-caret-right"></i> Yeni Alış Formu</a></li>
                         <li><a href="<?php echo site_url('form/lists'); ?>"><i class="fa fa-caret-right"></i> Form Listesi</a></li>
+                      </ul>
+                    </li>
+                    <li class="nav-parent active_payment"><a href="" class="menu-parent"><i class="fa fa-archive"></i> <span>Kasa &amp; Nakit</span> <span class="naviicon"><i class="fa fa-plus"></i></span></a>
+                      <ul style="display: none;" class="children">
+                        <li><a href="<?php echo site_url('payment'); ?>"><i class="fa fa-caret-right"></i> Kasa Yönetimi</a></li>
+                        <li><a href="<?php echo site_url('payment/add/?in'); ?>"><i class="fa fa-caret-right"></i> Tahsilat</a></li>
+                        <li><a href="<?php echo site_url('payment/add/?out'); ?>"><i class="fa fa-caret-right"></i> Ödeme</a></li>
+                        <li><a href="<?php echo site_url('payment/lists'); ?>"><i class="fa fa-caret-right"></i> Ödeme & Tahsilat</a></li>
                       </ul>
                     </li>
                     <li class=""><a href="tables.html"><i class="fa fa-th-list"></i> <span>Kasa &amp; Nakit</span></a></li>
@@ -388,6 +396,40 @@ $(document).ready( function() {
                     <div class="exchange">
                         <i class="fa fa-euro text-primary"></i><div class="value"><span class="text-danger">2,369<small>.20 </small></span></div>
                         <div class="title">EURO döviz kuru</div>
+                    </div>
+                </div>
+                
+                
+                <div class="clearfix"></div>
+                <div class="h10"></div>
+                <div class="liner"></div>
+				<div class="h10"></div>
+                <div class="clearfix"></div>
+                
+                
+                <div class="pull-left">
+                    <div class="exchange">
+                        <i class="fa fa-flash text-warning"></i><div class="value"><span class="text-danger"><span class="1kisi">0</span><small>KB</small></span></div>
+                        <div class="title">1 KİŞİ BAĞLANDI</div>
+                    </div>
+                </div>
+                <div class="pull-right">
+                    <div class="exchange">
+                        <i class="fa fa-flash text-warning"></i><div class="value"><span class="text-danger"><span class="10kisi">0</span><small>MB</small></span></div>
+                        <div class="title">10 KİŞİ BAĞLANDI</div>
+                    </div>
+                </div>
+                
+                <div class="pull-left">
+                    <div class="exchange">
+                        <i class="fa fa-flash text-warning"></i><div class="value"><span class="text-danger"><span class="100kisi">0</span><small>MB</small></span></div>
+                        <div class="title">100 KİŞİ BAĞLAN</div>
+                    </div>
+                </div>
+                <div class="pull-right">
+                    <div class="exchange">
+                        <i class="fa fa-flash text-warning"></i><div class="value"><span class="text-danger"><span class="1000kisi">0</span><small>GB</small></span></div>
+                        <div class="title">1000 KİŞİ BAĞLAN</div>
                     </div>
                 </div>
 

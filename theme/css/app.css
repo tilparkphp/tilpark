@@ -340,6 +340,7 @@ a.logo .note {
 	font-size: 10px;
 	text-transform: uppercase;
 	color: #666;
+	margin-top:1px;
 }
 .sidebar .nav-pills > li > a {
 	border-radius: 0px;
@@ -1357,8 +1358,12 @@ label {
 	line-height: 1.33;
 	border-radius: 6px;
 }
-.form-group .input-group-addon {
-	padding:5px 12px;
+span.input-group-addon {
+	cursor:pointer;
+	padding:0px;
+}
+span.input-group-addon .fa {
+	width:32px;
 }
 .form-control {
 	border-radius: 0px !important;

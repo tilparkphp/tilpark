@@ -28,23 +28,6 @@ function alertbox($type='alert-info', $title='', $content='', $x=true)
 }
 
 
-function notifyBox($style='success', $text, $position='top-right')
-{
-	echo "<script>$('.$position').notify({message: { text: '$text' }, type:'$style'}).show();</script>";
-}
-
-function page_access($role)
-{
-	if(get_the_current_user('role') <= $role)
-	{
-		
-	}
-	else
-	{
-		redirect(site_url('user/no_access/'.$role));	
-	}
-}
-
 
 
 
@@ -106,19 +89,20 @@ function get_option($data)
 	}
 }
 
-function get_options($data, $sort=false)
+function get_options($data, $array=array())
 {
 	$ci =& get_instance();
 	
 	$ci->db->where($data);
-	if($sort){ $ci->db->order_by($sort); }
+	if(isset($array['order_by'])){ $ci->db->order_by($array['order_by']); }
 	$query = $ci->db->get('options')->result_array();	
 	if($query)
 	{
 		$return = array();
 		foreach($query as $q)
 		{
-			$return[$q['key']] = $q;
+			if(isset($array['default_value'])) { $return[$q[$array['default_value']]] = $q; }
+			else { $return[$q['key']] = $q;  }
 		}
 		return $return;
 	}
@@ -544,7 +528,7 @@ function calc_cahsbox($cahsbox_id='')
 
 
 
-function get_text_payment($text)
+function get_text_payment_type($text)
 {
 	if($text == 'cash'){return 'Nakit';}
 	if($text == 'cheque'){return 'Banka Çeki';}

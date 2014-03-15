@@ -143,11 +143,11 @@ function calc_invoice_items($form_id)
 
 function get_text_in_out($in_out)
 {
-	if($in_out == 0)
+	if($in_out == 'in')
 	{
 		return 'GİRİŞ';
 	}
-	elseif($in_out == 1)
+	elseif($in_out == 'out')
 	{
 		return 'ÇIKIŞ';
 	}

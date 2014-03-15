@@ -1,5 +1,5 @@
 <ol class="breadcrumb">
-	<li><a href="<?php echo site_url(''); ?>"><?php lang('Dashboard'); ?></a></li>
+	<li><a href="<?php echo site_url(''); ?>">Yönetim Paneli</a></li>
 	<li><a href="<?php echo site_url('payment'); ?>">Kasa</a></li>
 	<li class="active">Kasa Yönetimi</li>
 </ol>
@@ -98,7 +98,7 @@
             </tr>
         </thead>
         <tbody>
-        	<?php $cashboxs = get_options(array('group'=>'cashbox', 'val_5'=>''), 'key ASC'); ?>
+        	<?php $cashboxs = get_options(array('group'=>'cashbox', 'val_5'=>''), array('order_by'=>'key ASC')); ?>
             <?php if($cashboxs): ?>
         	<?php foreach($cashboxs as $cashbox): ?>
             	<?php
@@ -135,7 +135,7 @@
             </tr>
         </thead>
         <tbody>
-        	<?php $cashboxs = get_options(array('group'=>'bank', 'val_5'=>''), 'key ASC'); ?>
+        	<?php $cashboxs = get_options(array('group'=>'bank', 'val_5'=>''), array('order_by'=>'key ASC')); ?>
             <?php if($cashboxs): ?>
         	<?php foreach($cashboxs as $cashbox): ?>
             	<?php

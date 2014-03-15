@@ -1,5 +1,5 @@
 <ol class="breadcrumb">
-	<li><a href="<?php echo site_url(''); ?>"><?php lang('Dashboard'); ?></a></li>
+	<li><a href="<?php echo site_url(''); ?>">Yönetim Paneli</a></li>
 	<li><a href="<?php echo site_url('payment'); ?>">Kasa</a></li>
     <li><a href="<?php echo site_url('payment/cashbox'); ?>">Kasa Yönetimi</a></li>
 	<li class="active"><?php echo $cashbox['key']; ?> Detayları</li>
@@ -18,8 +18,8 @@
             <th width="100">Ödeme Türü</th>
             <th>Açıklama</th>
             <th>Diğer</th>
-            <th width="80">Giriş</th>
-            <th width="80">Çıkış</th>
+            <th width="80">Tahsilat</th>
+            <th width="80">Ödeme</th>
             <th width="80">Ara Toplam</th>
         </tr>
     </thead>
@@ -29,13 +29,15 @@
     	<?php $account = get_account($payment['account_id']); ?>
     	<tr>
         	<td class="hide"></td>
-        	<td><a href="<?php echo site_url('invoice/view/'.$payment['id']); ?>">#<?php echo $payment['id']; ?></a></td>
+        	<td><a href="<?php echo site_url('payment/view/'.$payment['id']); ?>">#<?php echo $payment['id']; ?></a></td>
             <td class="fs-11"><?php echo substr($payment['date'],0,16); ?></td>
             <td class="fs-11"><?php echo get_text_in_out($payment['in_out']); ?></td>
-            <td><a href="<?php echo site_url('account/get_account/'.$payment['account_id']); ?>" target="_blank"><?php echo $account['name']; ?></a></td>
-            <td><?php echo get_text_payment($payment['val_1']); ?></td>
-            <td><?php echo mb_substr($payment['description'],0,30,'utf-8'); ?></td>
-            <td><?php echo $payment['val_2']; ?> <?php echo $payment['val_4']; ?></td>
+            <td title="<?php echo $account['name']; ?>">
+            	<a href="<?php echo site_url('account/get_account/'.$payment['account_id']); ?>" target="_blank"><?php echo mb_substr($account['name'],0,20,'utf-8'); ?></a>
+            </td>
+            <td><?php echo get_text_payment_type($payment['val_1']); ?></td>
+            <td title="<?php echo $payment['description']; ?>"><?php echo mb_substr($payment['description'],0,20,'utf-8'); ?></td>
+            <td><?php echo $payment['val_2']; ?> <?php if($payment['val_4'] != ''): ?> &raquo; <?php echo $payment['val_4']; ?><?php endif; ?></td>
             <?php if($payment['in_out'] == 'in'): ?>
             	<?php $sub_total = $sub_total + $payment['grand_total']; ?>
             	<td class="text-right"><?php echo get_money($payment['grand_total']); ?></td>

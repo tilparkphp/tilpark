@@ -2,8 +2,8 @@
 
 
 <ol class="breadcrumb">
-  <li><a href="<?php echo site_url(''); ?>"><?php lang('Dashboard'); ?></a></li>
-  <li class="active"><?php lang('Payment'); ?></li>
+  <li><a href="<?php echo site_url(''); ?>">Yönetim Paneli</a></li>
+  <li class="active">Kasa</li>
 </ol>
 
 
@@ -36,8 +36,8 @@
             <a href="<?php echo site_url('payment/lists'); ?>" class="link-dashboard-stat">
                 <div class="dashboard-stat yellow none">
                     <div class="details">
-                        <div class="number"><?php lang('payments'); ?></div>
-                        <div class="desc"><?php lang('payment list'); ?></div>
+                        <div class="number">ödemeler</div>
+                        <div class="desc">ödeme ve tahsilat listesi</div>
                      </div>
                 </div> <!-- /.dashboard-stat -->
              </a>

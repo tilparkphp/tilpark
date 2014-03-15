@@ -1,9 +1,8 @@
 <ol class="breadcrumb">
-	<li><a href="<?php echo site_url(''); ?>"><?php lang('Dashboard'); ?></a></li>
-	<li><a href="<?php echo site_url('payment'); ?>"><?php lang('Payment'); ?></a></li>
-	<li class="active"><?php lang('Payment List'); ?></li>
+	<li><a href="<?php echo site_url(''); ?>">Yönetim Paneli</a></li>
+	<li><a href="<?php echo site_url('payment'); ?>">Kasa</a></li>
+	<li class="active">Ödeme Listesi</li>
 </ol>
-
 
 <?php $accounts = get_account_list_for_array(); ?>
 
@@ -11,26 +10,33 @@
 	<thead>
     	<tr>
         	<th class="hide"></th>
-        	<th><?php lang('ID'); ?></th>
-            <th><?php lang('Date'); ?></th>
-            <th><?php lang('Type'); ?></th>
-            <th><?php lang('Input'); ?>/<?php lang('Output'); ?></th>
-            <th><?php lang('Account Card'); ?></th>
-            <th><?php lang('Payment Type'); ?></th>
-            <th><?php lang('Grand Total'); ?></th>
+        	<th width="10"><?php lang('ID'); ?></th>
+            <th width="100"><?php lang('Date'); ?></th>
+            <th width="50">G/Ç</th>
+            <th>Hesap Kartı</th>
+            <th width="100">Ödeme Türü</th>
+            <th width="100">Banka</th>
+            <th width="80">Tahsilat</th>
+            <th width="80">Ödeme</th>
         </tr>
     </thead>
     <tbody>    
-    <?php foreach($payments as $invoice): ?>
+    <?php foreach($forms as $form): ?>
     	<tr>
         	<td class="hide"></td>
-        	<td><a href="<?php echo site_url('invoice/view/'.$invoice['id']); ?>">#<?php echo $invoice['id']; ?></a></td>
-            <td><?php echo substr($invoice['date'],0,16); ?></td>
-            <td><?php echo $invoice['type']; ?></td>
-            <td><?php echo get_text_in_out($invoice['in_out']); ?></td>
-            <td><a href="<?php echo site_url('account/get_account/'.$invoice['account_id']); ?>" target="_blank"><?php echo $accounts[$invoice['account_id']]['name']; ?></a></td>
-            <td><?php echo $invoice['val_1']; ?></td>
-            <td class="text-right"><?php echo get_money($invoice['grand_total']); ?></td>
+        	<td class="fs-11"><a href="<?php echo site_url('payment/view/'.$form['id']); ?>">#<?php echo $form['id']; ?></a></td>
+            <td class="fs-11"><?php echo substr($form['date'],0,16); ?></td>
+            <td class="fs-11"><?php echo get_text_in_out($form['in_out']); ?></td>
+            <td><a href="<?php echo site_url('account/view/'.$form['account_id']); ?>" target="_blank"><?php echo $accounts[$form['account_id']]['name']; ?></a></td>
+            <td><?php echo get_text_payment_type($form['val_1']); ?></td>
+            <td><?php echo $form['val_2']; ?></td>
+            <?php if($form['in_out'] == 'in'): ?>
+            <td class="text-right"><?php echo get_money($form['grand_total']); ?></td>
+            <td></td>
+            <?php else: ?>
+            <td></td>
+            <td class="text-right"><?php echo get_money($form['grand_total']); ?></td>
+            <?php endif; ?>
         </tr>
     <?php endforeach; ?>
     </tbody>

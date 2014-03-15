@@ -132,12 +132,11 @@ for($i=2; $i<1; $i++)
 	$this->db->insert('accounts', $data);
 }
 ?>
-<br />
-<br />
-<?php echo 'AYNI ANDA 1 KISI: <strong>'.$birkisi = round(memory_get_usage() / 1024 / 1024).' MB</strong>'; ?>
-<?php echo '<br />'; ?>
-<?php echo 'AYNI ANDA 10 KISI: <strong>'.($birkisi * 10).' MB</strong>'; ?>
-<?php echo '<br />'; ?>
-<?php echo 'AYNI ANDA 100 KISI: <strong>'.round($birkisi * 100).' MB</strong>'; ?>
-<?php echo '<br />'; ?>
-<?php echo 'AYNI ANDA 1000 KISI: <strong>'.number_format($birkisi * 1000 / 1024, 2).' GB</strong>'; ?>
+<?php $birkisi = round(memory_get_usage() / 1024 ); ?>
+
+<script>
+$('.1kisi').html('<?php echo $birkisi; ?>');
+$('.10kisi').html('<?php echo round($birkisi * 10 / 1024); ?>');
+$('.100kisi').html('<?php echo round($birkisi * 100 / 1024); ?>');
+$('.1000kisi').html('<?php echo round($birkisi * 1000 / 1024 / 1024); ?>');
+</script>
