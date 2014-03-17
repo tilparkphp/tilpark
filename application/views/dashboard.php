@@ -85,9 +85,7 @@
                 </a>
             </div> <!-- /.col-md-3 -->
         </div> <!-- /.row -->
-       
         
-   
  	
 	<div class="h20"></div>
    

@@ -1,7 +1,7 @@
 <ol class="breadcrumb">
-  <li><a href="<?php echo site_url(); ?>"><?php lang('Dashboard'); ?></a></li>
-  <li><a href="<?php echo site_url('account'); ?>"><?php lang('Account'); ?></a></li>
-  <li class="active"><?php lang('New Account'); ?></li>
+  <li><a href="<?php echo site_url(); ?>">Yönetim Paneli</a></li>
+  <li><a href="<?php echo site_url('account'); ?>">Hesap Yönetimi</a></li>
+  <li class="active">Yeni Hesap Kartı</li>
 </ol>
 
 
@@ -22,36 +22,28 @@ if(@$haveBarcode) { alertbox('alert-danger', '"'.$account['code'].'" Barkod kodu
 
             <div class="row">
                 <div class="col-md-6">
-                       
                     <div class="form-group">
-                        <label for="code" class="control-label  "><?php lang('Account Code'); ?></label>
+                        <label for="code" class="control-label">Hesap Kodu <small class="text-muted">barkod kodu</small></label>
                         <div class="input-prepend input-group">
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-barcode"></span></span>
-                            <input type="text" id="code" name="code" class="form-control " placeholder="<?php lang('Barcode Code'); ?>" minlength="3" maxlength="30" value="<?php echo $account['code']; ?>">
+                            <span class="input-group-addon"><span class="fa fa-barcode"></span></span>
+                            <input type="text" id="code" name="code" class="form-control" minlength="3" maxlength="30" value="<?php echo $account['code']; ?>" autocomplete="off">
                         </div>
                         
-                    </div>
-                    <div class="form-group">
-                        <label for="name" class="control-label  "><?php lang('Account Name'); ?></label>
-                        <div class="input-prepend input-group">
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-text-width"></span></span>
-                            <input type="text" id="name" name="name" class="form-control  required" placeholder="<?php lang('Account Name'); ?>" minlength="3" maxlength="30" value="<?php echo $account['name']; ?>">
-                        </div>
-                    </div>     
+                    </div> <!-- /.form-group -->
                 </div> <!-- /.col-md-6 -->
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="name_surname" class="control-label  "><?php lang('Name and Surname'); ?></label>
+                	<div class="form-group">
+                        <label for="name" class="control-label">Hesap Kartı <small class="text-muted">firma adı</small></label>
                         <div class="input-prepend input-group">
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-text-width"></span></span>
-                            <input type="text" id="name_surname" name="name_surname" class="form-control " placeholder="<?php lang('Name Surname'); ?>" value="<?php echo $account['name_surname']; ?>" minlengt="3" maxlength="30">
+                            <span class="input-group-addon"><span class="fa fa-text-width"></span></span>
+                            <input type="text" id="name" name="name" class="form-control required" minlength="3" maxlength="50" value="<?php echo $account['name']; ?>" autocomplete="off">
                         </div>
-                    </div> <!-- /.form-group -->
+                    </div>  
                     <div class="form-group">
-                        <label for="balance" class="control-label  "><?php lang('Balance'); ?></label>
+                        <label for="name_surname" class="control-label">Ad ve Soyad</label>
                         <div class="input-prepend input-group">
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-usd"></span></span>
-                            <input type="text" id="balance" name="balance" class="form-control  number" placeholder="0.00" value="<?php echo $account['balance']; ?>">
+                            <span class="input-group-addon"><span class="fa fa-text-width"></span></span>
+                            <input type="text" id="name_surname" name="name_surname" class="form-control" value="<?php echo $account['name_surname']; ?>" minlengt="3" maxlength="30" autocomplete="off">
                         </div>
                     </div> <!-- /.form-group -->
                 </div> <!-- /.col-md-6 -->
@@ -61,28 +53,28 @@ if(@$haveBarcode) { alertbox('alert-danger', '"'.$account['code'].'" Barkod kodu
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="phone" class="control-label  "><?php lang('Phone'); ?></label>
+                        <label for="phone" class="control-label">Telefon</label>
                         <div class="input-prepend input-group">
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-phone-alt"></span></span>
-                            <input type="text" id="phone" name="phone" class="form-control digits" minlength="7" maxlength="16" value="<?php echo $account['phone']; ?>">
+                            <span class="input-group-addon"><span class="fa fa-phone"></span></span>
+                            <input type="text" id="phone" name="phone" class="form-control digits" minlength="7" maxlength="11" value="<?php echo $account['phone']; ?>">
                         </div>
                     </div> <!-- /.form-group -->
                 </div> <!-- /.col-md-4 -->
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="gsm" class="control-label  "><?php lang('Gsm'); ?></label>
+                        <label for="gsm" class="control-label">Gsm</label>
                         <div class="input-prepend input-group">
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-phone"></span></span>
-                            <input type="text" id="gsm" name="gsm" class="form-control   digits" minlength="7" maxlength="16" value="<?php echo $account['gsm']; ?>">
+                            <span class="input-group-addon"><span class="fa fa-mobile-phone"></span></span>
+                            <input type="text" id="gsm" name="gsm" class="form-control digits" minlength="7" maxlength="11" value="<?php echo $account['gsm']; ?>">
                         </div>
                     </div> <!-- /.form-group -->
                 </div> <!-- /.col-md-4 -->
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="email" class="control-label  "><?php lang('E-mail'); ?></label>
+                        <label for="email" class="control-label">E-Posta</label>
                         <div class="input-prepend input-group">
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
-                            <input type="text" id="email" name="email" class="form-control   email" minlength="6" maxlength="50" value="<?php echo $account['email']; ?>">
+                            <span class="input-group-addon"><span class="fa fa-envelope"></span></span>
+                            <input type="text" id="email" name="email" class="form-control email" minlength="6" maxlength="50" value="<?php echo $account['email']; ?>">
                         </div>
                     </div> <!-- /.form-group -->
                 </div> <!-- /.col-md-4 -->
@@ -92,25 +84,25 @@ if(@$haveBarcode) { alertbox('alert-danger', '"'.$account['code'].'" Barkod kodu
             <div class="row">
                 <div class="col-md-8">
                     <div class="form-group">
-                        <label for="address" class="control-label  "><?php lang('Address'); ?></label>
+                        <label for="address" class="control-label">Adres</label>
                         <div class="input-prepend input-group">
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-text-width"></span></span>
-                           <textarea class="form-control" name="address" id="address" style="height:84px;" minlength="3" maxlength="250"><?php echo $account['address']; ?></textarea>
+                            <span class="input-group-addon"><span class="fa fa-text-width"></span></span>
+                           <textarea class="form-control" name="address" id="address" style="height:94px;" minlength="3" maxlength="250"><?php echo $account['address']; ?></textarea>
                         </div>
                     </div> <!-- /.form-group -->
                 </div> <!-- col-md-8 -->
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="county" class="control-label  "><?php lang('County'); ?></label>
+                        <label for="county" class="control-label">İlçe</label>
                         <div class="input-prepend input-group">
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-text-width"></span></span>
+                            <span class="input-group-addon"><span class="fa fa-text-width"></span></span>
                             <input type="text" id="county" name="county" class="form-control  " minlength="2" maxlength="20" value="<?php echo $account['county']; ?>">
                         </div>
                     </div> <!-- /.form-group -->
                     <div class="form-group">
-                        <label for="city" class="control-label"><?php lang('City'); ?></label>
+                        <label for="city" class="control-label">İl</label>
                         <div class="input-prepend input-group">
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-text-width"></span></span>
+                            <span class="input-group-addon"><span class="fa fa-text-width"></span></span>
                             <input type="text" id="city" name="city" class="form-control  " minlength="2" maxlength="20" value="<?php echo $account['city']; ?>">
                         </div>
                     </div> <!-- /.form-group -->
@@ -119,9 +111,9 @@ if(@$haveBarcode) { alertbox('alert-danger', '"'.$account['code'].'" Barkod kodu
         
         
             <div class="form-group">
-                <label for="description" class="control-label"><?php lang('Description'); ?></label>
+                <label for="description" class="control-label">Açıklama</label>
                 <div class="input-prepend input-group">
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-text-width"></span></span>
+                    <span class="input-group-addon"><span class="fa fa-text-width"></span></span>
                    <textarea class="form-control" name="description" id="description" maxlength="500"><?php echo $account['description']; ?></textarea>
                 </div>
             </div> <!-- /.form-group -->
@@ -132,7 +124,8 @@ if(@$haveBarcode) { alertbox('alert-danger', '"'.$account['code'].'" Barkod kodu
             <div class="text-right">
                 <input type="hidden" name="microtime" value="<?php echo logTime(); ?>" />
                 <input type="hidden" name="add" />
-                <button class="btn btn-default btn-lg"><?php lang('Save'); ?> &raquo;</button>
+                <button type="reset" class="btn btn-default"><i class="fa fa-refresh"></i> Temizle</button>
+                <button type="submit" class="btn btn-default"><i class="fa fa-save"></i> Kaydet</button>
             </div> <!-- /.text-right -->
             
     </form>
@@ -144,6 +137,7 @@ if(@$haveBarcode) { alertbox('alert-danger', '"'.$account['code'].'" Barkod kodu
 	<div class="content padding-5">
         <p>Yeni hesap kartı açma alanında, müşteriler, bayiler, toptancılar, tedarikci firmalar ve imalatçıları ekleyebilirsin.</p>
         <p>Daha sonra bu hesaplara ödeme/çek verebilir ve alabilirsin. Ürün satabilir ve satın alabilirsin.</p>
+        <p>Hesap Kodu kutusu boş bırakılır ise otomatik oluşacaktır.</p>
 	</div> <!-- /.content -->
 </div> <!-- /.widget -->
 </div> <!-- /.col-md-4 -->

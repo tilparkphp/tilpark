@@ -1,6 +1,6 @@
 <ol class="breadcrumb">
-  <li><a href="<?php echo site_url(''); ?>"><?php lang('Dashboard'); ?></a></li>
-  <li class="active"><?php lang('Account'); ?></li>
+  <li><a href="<?php echo site_url(''); ?>">Yönetim Paneli</a></li>
+  <li class="active">Hesap Yönetimi</li>
 </ol>
 
 
@@ -12,9 +12,12 @@
         <div class="col-md-3">
             <a href="<?php echo site_url('account/add'); ?>" class="link-dashboard-stat">
                 <div class="dashboard-stat metro_green none">
+                	<div class="visual">
+                        <i class="fa fa-plus fs-20"></i>
+                    </div>
                     <div class="details">
-                        <div class="number"><i class="icon-comments glyphicon glyphicon-plus fs-12 mr5"></i><?php lang('new'); ?></div>
-                        <div class="desc"><?php lang('new account card'); ?></div>
+                        <div class="number">yeni</div>
+                        <div class="desc">yeni hesap kartı</div>
                      </div>
                 </div> <!-- /.dashboard-stat -->
             </a>
@@ -22,9 +25,12 @@
         <div class="col-md-3">
             <a href="<?php echo site_url('account/lists'); ?>" class="link-dashboard-stat">
                 <div class="dashboard-stat yellow none">
+                	<div class="visual">
+                        <i class="fa fa-list fs-20"></i>
+                    </div>
                     <div class="details">
-                        <div class="number"><?php lang('accounts'); ?></div>
-                        <div class="desc"><?php lang('account list'); ?></div>
+                        <div class="number">hesaplar</div>
+                        <div class="desc">hesap kartlar listesi</div>
                      </div>
                 </div> <!-- /.dashboard-stat -->
              </a>
@@ -33,8 +39,8 @@
             <a href="<?php echo site_url('account/telephone_directory'); ?>" class="link-dashboard-stat">
                 <div class="dashboard-stat yellow none">
                     <div class="details">
-                        <div class="number"><?php lang('guide'); ?></div>
-                        <div class="desc"><?php lang('gsm,address,city,county'); ?></div>
+                        <div class="number">rehber</div>
+                        <div class="desc">telefon rehberi</div>
                      </div>
                 </div> <!-- /.dashboard-stat -->
              </a>
@@ -44,8 +50,8 @@
             <a href="<?php echo site_url('account/options'); ?>" class="link-dashboard-stat">
                 <div class="dashboard-stat metro_brown none">
                     <div class="details">
-                        <div class="number"><?php lang('options'); ?></div>
-                        <div class="desc"><?php lang('management settings'); ?></div>
+                        <div class="number">seçenekler</div>
+                        <div class="desc">yönetim seçenekleri</div>
                      </div>
                 </div> <!-- /.dashboard-stat -->
              </a>

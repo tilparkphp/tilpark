@@ -95,7 +95,8 @@ function get_options($data, $array=array())
 	
 	$ci->db->where($data);
 	if(isset($array['order_by'])){ $ci->db->order_by($array['order_by']); }
-	$query = $ci->db->get('options')->result_array();	
+	$query = $ci->db->get('options')->result_array();
+		
 	if($query)
 	{
 		$return = array();
@@ -108,7 +109,7 @@ function get_options($data, $array=array())
 	}
 	else
 	{
-		return false;	
+		return false;
 	}
 }
 

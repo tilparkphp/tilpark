@@ -29,7 +29,7 @@
             <div class="col-md-3">
             
                 <div class="form-group">
-                    <label for="date" class="control-label  ">Tarih</label>
+                    <label for="date" class="control-label">Tarih</label>
                     <div class="input-prepend input-group">
                         <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
                         <input type="text" id="date" name="date" class="form-control required datepicker pointer" placeholder="<?php lang('Start Date'); ?>" minlength="3" maxlength="50" value="<?php echo date('Y-m-d'); ?>" readonly>
@@ -37,10 +37,17 @@
                 </div> <!-- /.form-group -->
                 
                 <div class="form-group">
+                	<label for="transaction_type" class="control-label">İşlem Gurubu</label>
+                    <select name="transaction_type" id="transaction_type" class="form-control">
+                    	<option value="account">Cari Hesap</option>
+                        <option value="manual">Manuel</option>
+                    </select>
+                </div> <!-- /.form-group -->
+                
+                <div class="form-group">
                     <label for="payment_type" class="control-label">Ödeme Türü</label>
                     <select name="payment_type" id="payment_type" class="form-control  ">
                         <option value="cash">Nakit</option>
-                        <option value="cheque">Banka Çeki</option>
                         <option value="bank_transfer">Havale/EFT</option>
                     </select>
                 </div> <!-- /.form-group -->
@@ -71,16 +78,41 @@
             </div> <!-- /.col-md-3 -->
             <div class="col-md-9">
             
-                <div class="form-group">
-                    <input type="hidden" name="account_id" id="account_id" value="" />
-                    <label for="account_name" class="control-label">Hesap Kartı</label>
-                    <div class="input-prepend input-group">
-                        <span class="input-group-addon pointer"><span class="fa fa-user"></span></span>
-                        <input type="text" id="account_name" name="account_name" class="form-control required" placeholder="hesap kartı..." value="" autocomplete="off">
-                    </div>
-                </div> <!-- /.form-group -->
-                <div class="search_account typeHead"></div>
+            	<div id="transaction_type_account">
+                    <div class="form-group">
+                        <input type="hidden" name="account_id" id="account_id" value="" />
+                        <label for="account_name" class="control-label">Hesap Kartı</label>
+                        <div class="input-prepend input-group">
+                            <span class="input-group-addon pointer"><span class="fa fa-user"></span></span>
+                            <input type="text" id="account_name" name="account_name" class="form-control required" placeholder="hesap kartı..." value="" autocomplete="off">
+                        </div>
+                    </div> <!-- /.form-group -->
+                    <div class="search_account typeHead"></div>
+                </div> <!-- /#transaction_type_account -->
                 
+                <div id="transaction_type_manual">
+                	<div class="note"><i class="fa fa-quote-left"></i> manuel işlem yapıyorsun, cari hesap bakiyeleri etkilenmez. sadece kasa hareketleri etkilenir.</div>
+                	<div class="row">
+                    	<div class="col-md-6">
+                        	<div class="form-group">
+                            	<label for="name" class="control-label">Firma/Kurum Adı</label>
+                                <div class="input-prepend input-group">
+                                	<span class="input-group-addon pointer"><i class="fa fa-text-width"></i></span>
+                                	<input type="text" name="name" id="name" class="form-control" value="" autocomplete="off" />
+                                </div>
+                            </div> <!-- /.form-group -->
+                        </div> <!-- /.col-md-6 -->
+                        <div class="col-md-6">
+                        	<div class="form-group">
+                            	<label for="name_surname" class="control-label">Yetkili Ad Soyad</label>
+                                <div class="input-prepend input-group">
+                                	<span class="input-group-addon pointer"><i class="fa fa-text-width"></i></span>
+                                	<input type="text" name="name_surname" id="name_surname" class="form-control" value="" autocomplete="off" />
+                                </div>
+                            </div> <!-- /.form-group -->
+                        </div> <!-- /.col-md-6 -->
+                    </div> <!-- /.row -->
+                </div> <!-- /#transaction_type_manual -->
                 
                 <div class="row">
                     <div class="col-md-4">
@@ -137,7 +169,7 @@
                 
                 <div id="bank_info">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="bank_name" class="control-label">Banka Adı</label>
                                 <div class="input-prepend input-group">
@@ -145,8 +177,8 @@
                                     <input type="text" id="bank_name" name="bank_name" class="form-control" minlength="2" maxlength="50" value="">
                                 </div>
                             </div> <!-- /.form-group -->
-                        </div> <!-- /.col-md-6 -->
-                        <div class="col-md-6">
+                        </div> <!-- /.col-md-4 -->
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="branch_code" class="control-label">Şube Adı veya Kodu</label>
                                 <div class="input-prepend input-group">
@@ -154,33 +186,19 @@
                                     <input type="text" id="branch_code" name="branch_code" class="form-control">
                                 </div>
                             </div> <!-- /.form-group --> 
-                        </div> <!-- /.col-md-6 -->
+                        </div> <!-- /.col-md-4 -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="serial_no" class="control-label">Seri/Fiş/İşlem No</label>
+                                <div class="input-prepend input-group">
+                                    <span class="input-group-addon"><span class="fa fa-text-width"></span></span>
+                                    <input type="text" id="serial_no" name="serial_no" class="form-control">
+                                </div>
+                            </div> <!-- /.form-group --> 
+                        </div> <!-- /.col-md-4 -->
                     </div> <!-- /.row -->
                 </div> <!-- /#bank_info --> 
                 
-                
-                <div id="cheque_info">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="fall_due_on" class="control-label">Vade Tarihi</label>
-                                <div class="input-prepend input-group">
-                                    <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                                    <input type="text" id="fall_due_on" name="fall_due_on" class="form-control   required datepicker pointer" minlength="3" maxlength="50" value="<?php echo date('Y-m-d'); ?>" readonly>
-                                </div>
-                            </div> <!-- /.form-group -->
-                        </div> <!-- /.col-md-6 -->
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="cheque_serial_no" class="control-label">Seri/Fiş/İşlem No</label>
-                                <div class="input-prepend input-group">
-                                    <span class="input-group-addon"><span class="fa fa-text-width"></span></span>
-                                    <input type="text" id="cheque_serial_no" name="cheque_serial_no" class="form-control">
-                                </div>
-                            </div> <!-- /.form-group --> 
-                        </div> <!-- /.col-md-6 -->
-                    </div> <!-- /.row -->
-                </div> <!-- /#cheque_info --> 
                 
                 <div class="form-group">
                     <label for="description" class="control-label">Açıklama</label>
@@ -193,14 +211,11 @@
             </div> <!-- /.col-md-9 -->
         </div> <!-- /.row -->
         
-        
-        
-        
         <div class="h20"></div>
         <div class="text-right">
             <input type="hidden" name="log_time" value="<?php echo logTime(); ?>" />
             <input type="hidden" name="add" />
-            <button class="btn btn-default fs-2"><i class="fa fa-save"></i> Kaydet</button>
+            <button type="submit" class="btn btn-default fs-2"><i class="fa fa-save"></i> Kaydet</button>
         </div> <!-- /.text-right -->
     </form>
     
@@ -213,50 +228,36 @@
 <div class="h20"></div>
 
 <script>
-$(document).ready(function(e) {
-	
-	/* hesap kartlarinin ajax aranmasi için kullanıacak fonksiyon */
-	$('#account_name').keyup(function() {
-		$('.typeHead').show();
-		$.get("../search_account/"+$(this).val()+"", function( data ) {
-		  $('.search_account').html(data);
-		});
-	});
-	
-	/* sayfa ilk yuklendiğinde kapanacak bölümler */
-	$('#bank_info').hide();
-	$('#cheque_info').hide();
-});
-
-
 /* odeme turu yani "nakit,çek,banka havalesi" gibi değerler değiştiğinde gösterilecek kutular */
 $('#payment_type').change(function() {
-	if($('#payment_type').val() == 'cheque')
+	$('#serial_no').removeClass('required');
+	
+	if($('#payment_type').val() == 'bank_transfer')
 	{ 
 		$('#bank_info').show('blonde'); 
-		$('#cheque_info').show('blonde'); 
-		
-		$('#optgroup_cashbox').removeAttr('disabled'); 
-	}
-	else if($('#payment_type').val() == 'bank_transfer')
-	{ 
-		$('#bank_info').show('blonde'); 
-		$('#cheque_info').hide('blonde'); 
 		
 		$('#optgroup_cashbox').attr('disabled', 'disabled'); 
 		$('#optgroup_cashbox option').removeAttr('selected'); 
+		$('#optgroup_bank').find('option:first').attr("selected",true);
+		$.changeCashbox();
 	}
 	else
 	{ 
 		$('#bank_info').hide('blonde'); 
-		$('#cheque_info').hide('blonde'); 
 		
 		$('#optgroup_cashbox').removeAttr('disabled'); 
+		$('#optgroup_bank option').removeAttr('selected'); 
+		$('#optgroup_cashbox').find('option:first').attr("selected",true);
+		$.changeCashbox();
 	}
+	
 });
 
 
-/* kasa değiştiğinde çalışacak fonksiyon */
+
+/* kasa değiştiğinde çalışacak fonksiyon 
+	kasa değiştiği zaman eski kasa bakiyesi güncellenmelidir.
+*/
 $.changeCashbox = function() {
 	var cashbox_id = $('#cahsbox').val();
 	var cashboxArray = [];
@@ -268,12 +269,14 @@ $.changeCashbox = function() {
 	<?php endforeach; ?>
 	$('#cashbox_old_balance').val(parseFloat(cashboxArray[cashbox_id]).toFixed(2));
 }
-$.changeCashbox();
-$('#cahsbox').change(function() {
-	$.changeCashbox();
-});
+$('#cahsbox').change(function() { $.changeCashbox(); });
 
-/* odeme kutularinin hesaplanmasi icin kullanilmaktadir */
+
+
+/* odeme kutularinin hesaplanmasi icin kullanilmaktadir
+	odeme tutarına gore hesaplama yapilmaktadir. 
+	bu hesaplamalarda kasada kalan parada hesaplanmaktadır.
+ */
 function calc_payment()
 {
 	var old_balance = $('#old_balance').val(); old_balance = old_balance.replace(',','');
@@ -295,4 +298,56 @@ function calc_payment()
 		$('#cashbox_new_balance').val(parseFloat(new_cashbox_balance).toFixed(2));
 	<?php endif; ?>
 }
+
+/* islem turu secimi 
+	islem turu secimi degistinde eger manuel odeme ise hesap karti secimi yapilmayacaktir.
+*/
+$.transaction_type_change = function() {
+	$('#transaction_type_manual').hide();
+	$('#transaction_type_account').hide();
+	if($('#transaction_type').val() == 'account')
+	{
+		$('#transaction_type_manual').hide('');
+		$('#transaction_type_account').show('slide');
+		
+		$('#account_id').addClass('required');	
+		$('#account_name').addClass('required');	
+		
+		$('#name_surname').removeClass('required');	
+	}
+	else if($('#transaction_type').val() == 'manual')
+	{
+		$('#transaction_type_account').hide('');
+		$('#transaction_type_manual').show('slide');
+		
+		$('#account_id').removeClass('required');	
+		$('#account_name').removeClass('required');	
+		
+		$('#name_surname').addClass('required');	
+	}
+	else
+	{
+		return false;
+	}	
+}
+$('#transaction_type').change(function() { $.transaction_type_change(); });
+
+
+
+
+$(document).ready(function(e) {
+	
+	/* hesap kartlarinin ajax aranmasi için kullanıacak fonksiyon */
+	$('#account_name').keyup(function() {
+		$('.typeHead').show();
+		$.get("../search_account/"+$(this).val()+"", function( data ) {
+		  $('.search_account').html(data);
+		});
+	});
+	
+	/* sayfa ilk yuklendiğinde kapanacak bölümler ve yapılacak işlemler */
+	$('#bank_info').hide();
+	$.transaction_type_change();
+	$.changeCashbox();
+});
 </script>

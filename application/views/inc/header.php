@@ -148,7 +148,7 @@ $(document).ready( function() {
           	<a class="logo hidden-sm hidden-xs" href="<?php echo site_url(''); ?>">
             	<span style="color:#346c9b;">[</span> <span>tilpark!</span> 
                 <span style="color:#346c9b; font-size:40px; margin-left:16px; margin-top:2px; position:absolute;">]</span>
-            	<span class="note">açık kaynak</span>
+            	<span class="subtext">açık kaynak</span>
 			</a>
         </div>
         

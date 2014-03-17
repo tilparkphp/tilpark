@@ -45,7 +45,6 @@
 <div class="row">
 <div class="col-md-8">
 
-
 	<?php
 	if(@$formError) { alertbox('alert-danger', $formError);	 }
 	echo @$alert['success'];
@@ -63,7 +62,7 @@
                     <label for="date" class="control-label">Tarih</label>
                     <div class="input-prepend input-group">
                         <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                        <input type="text" id="date" name="date" class="form-control required datepicker pointer" placeholder="<?php lang('Start Date'); ?>" minlength="3" maxlength="50" value="<?php echo date('Y-m-d'); ?>" readonly>
+                        <input type="text" id="date" name="date" class="form-control required datepicker pointer" placeholder="<?php lang('Start Date'); ?>" minlength="3" maxlength="50" value="<?php echo substr($form['date'],0,10); ?>" readonly>
                     </div>
                 </div> <!-- /.form-group -->
             </div> <!-- /.col-md-4 -->
@@ -77,17 +76,6 @@
                     </div>
                 </div> <!-- /.form-group -->
                 <div class="search_account typeHead"></div>
-                <script>
-					// hesap karti arama ajax
-					$(document).ready(function(e) {
-						$('#account_name').keyup(function() {
-							$('.typeHead').show();
-							$.get("../search_account/"+$(this).val()+"", function( data ) {
-							  $('.search_account').html(data);
-							});
-						});
-					});
-				</script>
             </div> <!-- /.col-md-8 -->
         </div> <!-- /.row -->
         
@@ -110,14 +98,12 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="payment_type" class="control-label"><?php lang('Payment Type'); ?></label>
+                    <label for="payment_type" class="control-label">Ödeme Türü</label>
                     <select name="payment_type" id="payment_type" class="form-control">
                         <option value="cash" <?php selected($form['val_1'], 'cash'); ?>>Nakit</option>
                         <option value="cheque" <?php selected($form['val_1'], 'cheque'); ?>>Banka Çeki</option>
                         <option value="bank_transfer" <?php selected($form['val_1'], 'bank_transfer'); ?>>Havale/EFT</option>
                     </select>
-                    
-                    
                 </div> <!-- /.form-group -->
                 
                 <div class="form-group">
@@ -142,41 +128,6 @@
                         <?php endif; ?>
                     </select>
                 </div> <!-- /.form-group -->
-                
-                <script>
-					function payment_type()
-					{
-						if($('#payment_type').val() == 'cheque')
-							{ 
-								$('#bank_info').show('blonde'); 
-								$('#cheque_info').show('blonde'); 
-								
-								$('#optgroup_cashbox').removeAttr('disabled'); 
-							}
-							else if($('#payment_type').val() == 'bank_transfer')
-							{ 
-								$('#bank_info').show('blonde'); 
-								$('#cheque_info').hide('blonde'); 
-								
-								$('#optgroup_cashbox').attr('disabled', 'disabled'); 
-								$('#optgroup_cashbox option').removeAttr('selected'); 
-							}
-                            else
-							{ 
-								$('#bank_info').hide('blonde'); 
-								$('#cheque_info').hide('blonde'); 
-								
-								$('#optgroup_cashbox').removeAttr('disabled'); 
-							}
-					}
-					$('#payment_type').change(function() {
-						payment_type();
-					});
-					
-					$(document).ready(function() {
-						payment_type();
-					});
-                    </script>
                 
             </div> <!-- /.col-md-4 -->
             <div class="col-md-8">
@@ -209,7 +160,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="fall_due_on" class="control-label  "><?php lang('Fall Due On'); ?></label>
+                                <label for="fall_due_on" class="control-label">Vade Tarihi</label>
                                 <div class="input-prepend input-group">
                                     <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
                                     <input type="text" id="fall_due_on" name="fall_due_on" class="form-control   required datepicker pointer" placeholder="<?php lang('Fall Due On'); ?>" minlength="3" maxlength="50" value="<?php echo $form['val_4']; ?>" readonly>
@@ -218,25 +169,21 @@
                         </div> <!-- /.col-md-6 -->
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="cheque_serial_no" class="control-label"><?php lang('Serial No'); ?></label>
+                                <label for="serial_no" class="control-label">Seri/İşlem No</label>
                                 <div class="input-prepend input-group">
                                     <span class="input-group-addon"><span class="fa fa-text-width"></span></span>
-                                    <input type="text" id="cheque_serial_no" name="cheque_serial_no" class="form-control" placeholder="<?php lang('Serial No'); ?>" value="<?php echo $form['val_5']; ?>">
+                                    <input type="text" id="serial_no" name="serial_no" class="form-control" value="<?php echo $form['val_5']; ?>">
                                 </div>
                             </div> <!-- /.form-group --> 
                         </div> <!-- /.col-md-6 -->
                     </div> <!-- /.row -->
                     
                 </div> <!-- /#cheque_info --> 
-                <script>
-                	$('#bank_info').hide();
-					$('#cheque_info').hide();
-                </script>
                 <div class="form-group">
-                    <label for="description" class="control-label  "><?php lang('Description'); ?></label>
+                    <label for="description" class="control-label">Açıklama</label>
                     <div class="input-prepend input-group">
                         <span class="input-group-addon"><span class="fa fa-text-width"></span></span>
-                        <input type="text" id="description" name="description" class="form-control  " placeholder="<?php lang('Description'); ?>" minlength="3" maxlength="50" value="<?php echo $form['description']; ?>">
+                        <input type="text" id="description" name="description" class="form-control" minlength="3" maxlength="50" value="<?php echo $form['description']; ?>">
                     </div>
                 </div> <!-- /.form-group --> 
             </div> <!-- /.col-md-8 -->
@@ -250,7 +197,126 @@
             <button class="btn btn-default">Güncelle &raquo;</button>
         </div> <!-- /.text-right -->
     </form>
-    
+ 
+
+<script>
+/* odeme turu yani "nakit,çek,banka havalesi" gibi değerler değiştiğinde gösterilecek kutular */
+$.paymentTypeChange() = function (){
+	$('#serial_no').removeClass('required');
+	
+	if($('#payment_type').val() == 'cheque')
+	{ 
+		$('#bank_info').show('blonde'); 
+		$('#cheque_info').show('blonde'); 
+		
+		$('#optgroup_cashbox').removeAttr('disabled'); 
+		$('#serial_no').addClass('required');
+	}
+	else if($('#payment_type').val() == 'bank_transfer')
+	{ 
+		$('#bank_info').show('blonde'); 
+		$('#cheque_info').hide('blonde'); 
+		
+		$('#optgroup_cashbox').attr('disabled', 'disabled'); 
+		$('#optgroup_cashbox option').removeAttr('selected'); 
+	}
+	else
+	{ 
+		$('#bank_info').hide('blonde'); 
+		$('#cheque_info').hide('blonde'); 
+		
+		$('#optgroup_cashbox').removeAttr('disabled'); 
+	}
+}
+$('#payment_type').change(function() {
+	$.paymentTypeChange();
+});
+$.paymentTypeChange();
+
+
+
+/* odeme kutularinin hesaplanmasi icin kullanilmaktadir */
+function calc_payment()
+{
+	var old_balance = $('#old_balance').val(); old_balance = old_balance.replace(',','');
+	var cashbox_old_balance = $('#cashbox_old_balance').val(); old_balance = old_balance.replace(',','');
+	var payment = $('#payment').val();
+	
+	if(old_balance == ''){old_balance = 0;}
+	if(payment == ''){payment = 0;}
+	
+	<?php if($form['in_out'] == 'in'): ?>
+		var new_balance = parseFloat(old_balance) - parseFloat(payment);
+		var new_cashbox_balance = parseFloat(cashbox_old_balance) + parseFloat(payment);
+		$('#new_balance').val(parseFloat(new_balance).toFixed(2));
+		$('#cashbox_new_balance').val(parseFloat(new_cashbox_balance).toFixed(2));
+	<?php else: ?>
+		var new_balance = parseInt(old_balance) + parseFloat(payment);
+		var new_cashbox_balance = parseFloat(cashbox_old_balance) - parseFloat(payment);
+		$('#new_balance').val(parseFloat(new_balance).toFixed(2));
+		$('#cashbox_new_balance').val(parseFloat(new_cashbox_balance).toFixed(2));
+	<?php endif; ?>
+}
+
+
+
+/* islem turu secimi */
+$.transaction_type_change = function() {
+	$('#transaction_type_manual').hide();
+	$('#transaction_type_account').hide();
+	if($('#transaction_type').val() == 'account')
+	{
+		$('#transaction_type_manual').hide('');
+		$('#transaction_type_account').show('slide');
+		
+		$('#account_id').addClass('required');	
+		$('#account_name').addClass('required');	
+		
+		$('#name_surname').removeClass('required');	
+	}
+	else if($('#transaction_type').val() == 'manual')
+	{
+		$('#transaction_type_account').hide('');
+		$('#transaction_type_manual').show('slide');
+		
+		$('#account_id').removeClass('required');	
+		$('#account_name').removeClass('required');	
+		
+		$('#name_surname').addClass('required');	
+	}
+	else
+	{
+		return false;
+	}	
+}
+
+
+
+$('#transaction_type').change(function() {
+	$.transaction_type_change();
+});
+
+
+
+$(document).ready(function(e) {
+	/* hesap kartlarinin ajax aranmasi için kullanıacak fonksiyon */
+	$('#account_name').keyup(function() {
+		$('.typeHead').show();
+		$.get("../search_account/"+$(this).val()+"", function( data ) {
+		  $('.search_account').html(data);
+		});
+	});
+	
+	/* sayfa ilk yuklendiğinde kapanacak bölümler */
+	$('#bank_info').hide();
+	$('#cheque_info').hide();
+	$.transaction_type_change();
+});
+</script>
+
+
+
+
 </div> <!-- /.col-md-8 -->
 <div class="col-md-4">
 	

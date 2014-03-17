@@ -12,20 +12,31 @@ class Payment extends CI_Controller {
 	{
 		$data['cashboxs']	= get_options(array('group'=>'cashbox'), array('default_value'=>'id'));
 		$data['banks'] 		= get_options(array('group'=>'bank'), array('default_value'=>'id'));
+		
+		if(isset($_GET['in'])) {$data['form']['in_out'] = 'in';}else if(isset($_GET['out'])) {$data['form']['in_out'] = 'out';}else{exit('error! 3934833');}
 
 		if(isset($_POST['add']) and is_log())
 		{
-			$continue = true;
-			$this->form_validation->set_rules('account_id', get_lang('Account Card'), 'required|digits');
-			$this->form_validation->set_rules('account_name', get_lang('Account Name'), 'required|min_length[3]|max_length[30]');
+				if($_POST['transaction_type'] == 'account') // eger islem turu hesap kartlarina bagli ise 
+				{ 
+					$this->form_validation->set_rules('account_id', 'Hesap Kartı', 'required|digits');
+					$this->form_validation->set_rules('account_name', 'Hesap Kartı', 'required|min_length[3]|max_length[30]');
+				}
+				else if($_POST['transaction_type'] == 'manual') // eger islem turu manuel giris yada cikis ise
+				{
+					$this->form_validation->set_rules('name_surname', 'Ad ve Soyad', 'required|min_length[3]|max_length[30]');
+				}
 			$this->form_validation->set_rules('payment', get_lang('Payment'), 'required|number|max_length[12]');
 		
-			if ($this->form_validation->run() == FALSE)
+			if($this->form_validation->run() == FALSE)
 			{
-				$data['formError'] =  validation_errors();
+				$data['formError'] = validation_errors();
 			}
 			else
 			{
+				$form['type'] = 'payment';
+				if(isset($_GET['in'])){$form['in_out'] = 'in';} else if(isset($_GET['out'])){$form['in_out'] = 'out';}else{exit('93832485 error!');} 
+				
 				$form['date'] = $this->input->post('date').' '.date('H:i:s');;
 				$form['account_id'] = $this->input->post('account_id');
 				$form['description'] = mb_strtoupper($this->input->post('description'), 'utf-8');
@@ -33,25 +44,30 @@ class Payment extends CI_Controller {
 				$form['val_1'] = $this->input->post('payment_type');
 				$form['val_2'] = $this->input->post('bank_name');
 				$form['val_3'] = $this->input->post('branch_code');
-				if($form['val_1'] == 'cheque'){$form['val_4'] = $this->input->post('fall_due_on');}
-				if($form['val_1'] == 'cheque'){$form['val_5'] = $this->input->post('cheque_serial_no');}
+				$form['val_4'] = $this->input->post('serial_no');
 				$form['val_int'] = $this->input->post('cahsbox');
-				
-				
-				$form['type'] = 'payment';
-				if(isset($_GET['in'])){$form['in_out'] = 'in';} else if(isset($_GET['out'])){$form['in_out'] = 'out';}else{exit('93832485 error!');} 
-				
-				
-				// hesap secenekleri
-				$account = get_account($form['account_id']);
-					$form['name'] 			= $account['name'];
-					$form['name_surname'] 	= $account['name_surname'];
-					$form['phone'] 			= $account['phone'];
-					$form['gsm'] 			= $account['gsm'];
-					$form['email'] 			= $account['email'];
-					$form['address'] 		= $account['address'];
-					$form['county'] 		= $account['county'];
-					$form['city'] 			= $account['city'];
+					
+							
+				# hesap secenekleri
+				if($_POST['transaction_type'] == 'account')
+				{
+					$account = get_account($form['account_id']);
+						$form['name'] 			= $account['name'];
+						$form['name_surname'] 	= $account['name_surname'];
+						$form['phone'] 			= $account['phone'];
+						$form['gsm'] 			= $account['gsm'];
+						$form['email'] 			= $account['email'];
+						$form['address'] 		= $account['address'];
+						$form['county'] 		= $account['county'];
+						$form['city'] 			= $account['city'];
+				}
+				else
+				{
+					$form['account_id'] 	= 0;
+					$form['name'] 			= mb_strtoupper($this->input->post('name'),'utf-8');
+					$form['name_surname'] 	= mb_strtoupper($this->input->post('name_surname'),'utf-8');
+					if($form['name'] == ''){$form['name'] = $form['name_surname'];}
+				}
 				
 				# odeme hareketi ekle	
 				$form_id = add_form($form);
@@ -60,19 +76,18 @@ class Payment extends CI_Controller {
 					calc_cahsbox($form['val_int']); // kasa bakiyesini tekrar hesapla
 					calc_account_balance($form['account_id']); // hesap kartinin bakiyesini tekrar hesapla
 					
-					$data['type'] = 'payment';
-					$data['form_id'] = $form_id;
-					$data['account_id'] = $form['account_id'];
-					$data['title'] = get_lang('New Receipt');
-					$data['description'] = 'Ödeme hareketi';
-					add_log($data);
+					$log['type'] = 'payment';
+					$log['form_id'] = $form_id;
+					$log['account_id'] = $form['account_id'];
+					$log['title'] = 'Yeni Ödeme';
+					$log['description'] = 'Ödeme hareketi';
+					add_log($log);
 					
-					$data['alert']['success'] = get_alertbox('alert-success', 'İşlemler başarılı', 'Kasa hareketi veritabanına eklendi.');	
+					$data['alert']['success'] = get_alertbox('alert-success', 'İşlemler başarılı', 'Kasa hareketi veritabanına eklendi.');
 				}
 				else { alertbox('alert-danger', get_lang('Error!')); }
 			}
 		}
-		
 		$this->template->view('payment/add', @$data);	
 	}
 	
@@ -111,7 +126,7 @@ class Payment extends CI_Controller {
 			}
 			else
 			{
-				$form['date'] = $this->input->post('date').' '.date('H:i:s');
+				$form['date'] = $this->input->post('date');
 				$form['account_id'] = $this->input->post('account_id');
 				$form['description'] = mb_strtoupper($this->input->post('description'), 'utf-8');
 				$form['grand_total'] = $this->input->post('payment');
@@ -156,7 +171,6 @@ class Payment extends CI_Controller {
 					calc_account_balance($data['old_form']['account_id']); // hesap karti degismis ise eski hesap kartinin bakiyesini guncelleyelim
 					
 				}
-				else { alertbox('alert-danger', get_lang('Error!')); }
 			}
 		}
 		
@@ -177,7 +191,7 @@ class Payment extends CI_Controller {
 			$this->db->where('type', 'payment');
 			$this->db->where('val_int', $cashbox['id']);
 			$this->db->order_by('ID', 'ASC');
-			$data['payments'] = $this->db->get('forms')->result_array();
+			$data['forms'] = $this->db->get('forms')->result_array();
 			
 			$this->template->view('payment/cashbox_detail', @$data);
 			return false;	

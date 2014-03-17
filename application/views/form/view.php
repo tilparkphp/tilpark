@@ -60,7 +60,6 @@ if($form['type'] == 'payment')
             <?php endif; ?>
             	| <?php echo $form['name']; ?>
         <?php endif; ?>
-       
     </li>
 </ol>
 

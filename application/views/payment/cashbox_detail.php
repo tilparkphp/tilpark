@@ -25,27 +25,32 @@
     </thead>
     <tbody>   
     <?php $sub_total = 0; ?> 
-    <?php foreach($payments as $payment): ?>
-    	<?php $account = get_account($payment['account_id']); ?>
+    <?php foreach($forms as $form): ?>
     	<tr>
         	<td class="hide"></td>
-        	<td><a href="<?php echo site_url('payment/view/'.$payment['id']); ?>">#<?php echo $payment['id']; ?></a></td>
-            <td class="fs-11"><?php echo substr($payment['date'],0,16); ?></td>
-            <td class="fs-11"><?php echo get_text_in_out($payment['in_out']); ?></td>
-            <td title="<?php echo $account['name']; ?>">
-            	<a href="<?php echo site_url('account/get_account/'.$payment['account_id']); ?>" target="_blank"><?php echo mb_substr($account['name'],0,20,'utf-8'); ?></a>
+        	<td><a href="<?php echo site_url('payment/view/'.$form['id']); ?>">#<?php echo $form['id']; ?></a></td>
+            <td class="fs-11"><?php echo substr($form['date'],0,16); ?></td>
+            <td class="fs-11"><?php echo get_text_in_out($form['in_out']); ?></td>
+            <td title="<?php echo $form['name']; ?>">
+            	<?php if($form['account_id'] > 0): ?>
+            		<a href="<?php echo site_url('account/view/'.$form['account_id']); ?>" target="_blank">
+						<?php echo mb_substr($form['name'],0,20,'utf-8'); ?>
+                    </a>
+                <?php else: ?>
+                	<?php echo mb_substr($form['name'],0,20,'utf-8'); ?>
+                <?php endif; ?>
             </td>
-            <td><?php echo get_text_payment_type($payment['val_1']); ?></td>
-            <td title="<?php echo $payment['description']; ?>"><?php echo mb_substr($payment['description'],0,20,'utf-8'); ?></td>
-            <td><?php echo $payment['val_2']; ?> <?php if($payment['val_4'] != ''): ?> &raquo; <?php echo $payment['val_4']; ?><?php endif; ?></td>
-            <?php if($payment['in_out'] == 'in'): ?>
-            	<?php $sub_total = $sub_total + $payment['grand_total']; ?>
-            	<td class="text-right"><?php echo get_money($payment['grand_total']); ?></td>
+            <td><?php echo get_text_payment_type($form['val_1']); ?></td>
+            <td title="<?php echo $form['description']; ?>"><?php echo mb_substr($form['description'],0,20,'utf-8'); ?></td>
+            <td><?php echo $form['val_2']; ?> <?php if($form['val_4'] != ''): ?> &raquo; <?php echo $form['val_4']; ?><?php endif; ?></td>
+            <?php if($form['in_out'] == 'in'): ?>
+            	<?php $sub_total = $sub_total + $form['grand_total']; ?>
+            	<td class="text-right"><?php echo get_money($form['grand_total']); ?></td>
                 <td></td>
-            <?php elseif($payment['in_out'] == 'out'): ?>
-            	<?php $sub_total = $sub_total - $payment['grand_total']; ?>
+            <?php elseif($form['in_out'] == 'out'): ?>
+            	<?php $sub_total = $sub_total - $form['grand_total']; ?>
             	<td></td>
-            	<td class="text-right"><?php echo get_money($payment['grand_total']); ?></td>
+            	<td class="text-right"><?php echo get_money($form['grand_total']); ?></td>
             <?php endif; ?>
             <td class="text-right"><?php echo get_money($sub_total); ?></td>
         </tr>
