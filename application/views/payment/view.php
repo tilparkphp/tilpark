@@ -43,284 +43,67 @@
 <div class="tab-pane fade active in" id="transactions">
 
 <div class="row">
-<div class="col-md-8">
+<div class="col-md-12">
 
-	<?php
-	if(@$formError) { alertbox('alert-danger', $formError);	 }
-	echo @$alert['success'];
-	?>
-
-    <form name="form_new_product" id="form_new_product" action="" method="POST" class="validation">
-        <h3><i class="fa fa-puzzle-piece"></i><?php if($form['in_out'] == 'in'): ?>
-            Tahsilat Formu
-        <?php else: ?>
-            Ödeme Formu
-        <?php endif; ?></h3>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="date" class="control-label">Tarih</label>
-                    <div class="input-prepend input-group">
-                        <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                        <input type="text" id="date" name="date" class="form-control required datepicker pointer" placeholder="<?php lang('Start Date'); ?>" minlength="3" maxlength="50" value="<?php echo substr($form['date'],0,10); ?>" readonly>
-                    </div>
-                </div> <!-- /.form-group -->
-            </div> <!-- /.col-md-4 -->
-            <div class="col-md-8">
-                <div class="form-group openModal-account_list">
-                    <input type="hidden" name="account_id" id="account_id" value="<?php echo $form['account_id']; ?>" />
-                    <label for="account_name" class="control-label">Hesap Kartı</label>
-                    <div class="input-prepend input-group">
-                        <span class="input-group-addon pointer"><span class="fa fa-user"></span></span>
-                        <input type="text" id="account_name" name="account_name" class="form-control required" placeholder="hesap kartı..." value="<?php echo $account['name']; ?>" autocomplete="off">
-                    </div>
-                </div> <!-- /.form-group -->
-                <div class="search_account typeHead"></div>
-            </div> <!-- /.col-md-8 -->
-        </div> <!-- /.row -->
-        
-        
-        <div class="row">
-            <div class="col-md-8">
+	<div class="h20"></div>
+	<div class="center-block">
+    	<div class="panel-form">
+        	<div class="panel-body-heading bordered">
+            	<h3><?php if($form['in_out'] == 'in'): ?>Tahsilat<?php else: ?>Ödeme<?php endif; ?> Formu #<?php echo $form['id']; ?> <small><?php echo $form['name']; ?></small> <small class="pull-right fs-12"><?php echo substr($form['date'],0,10); ?></small></h3>
                 
-            </div> <!-- /.col-md-4 -->
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="payment" class="control-label">Ödeme Tutarı</label>
-                    <div class="input-prepend input-group">
-                        <span class="input-group-addon"><span class="fa fa-try"></span></span>
-                        <input type="text" id="payment" name="payment" class="form-control required number" placeholder="0.00" maxlength="10" value="<?php echo get_money($form['grand_total']); ?>" onkeypress="calc_payment();" onkeyup="calc_payment();">
-                    </div>
-                </div> <!-- /.form-group -->
-            </div> <!-- /.col-md-4 -->
-        </div> <!-- /.row -->
-    
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="payment_type" class="control-label">Ödeme Türü</label>
-                    <select name="payment_type" id="payment_type" class="form-control">
-                        <option value="cash" <?php selected($form['val_1'], 'cash'); ?>>Nakit</option>
-                        <option value="cheque" <?php selected($form['val_1'], 'cheque'); ?>>Banka Çeki</option>
-                        <option value="bank_transfer" <?php selected($form['val_1'], 'bank_transfer'); ?>>Havale/EFT</option>
-                    </select>
-                </div> <!-- /.form-group -->
-                
-                <div class="form-group">
-                    <label for="payment_type" class="control-label">Kasa veya Banka</label>
-                    <select name="cahsbox" id="cahsbox" class="form-control required">
-                        <?php $cahsboxs = get_options(array('group'=>'cashbox'), array('order_by'=>'key ASC')); ?>
-                        <?php if($cahsboxs): ?>
-                        	<optgroup label="Kasalar" id="optgroup_cashbox">
-								<?php foreach($cahsboxs as $cahsbox): ?>
-                                    <option value="<?php echo $cahsbox['id']; ?>" <?php selected($cahsbox['id'],$form['val_int']); ?> ><?php echo $cahsbox['key']; ?></option>
-                                <?php endforeach; ?>
-                            </optgroup>
-                        <?php endif; ?>
-                        
-                        <?php $banks = get_options(array('group'=>'bank'), array('order_by'=>'key ASC')); ?>
-                        <?php if($banks): ?>
-                            <optgroup label="Bankalar" id="optgroup_bank">
-                                <?php foreach($banks as $bank): ?>
-                                    <option value="<?php echo $bank['id']; ?>" <?php selected($bank['id'],$form['val_int']); ?>><?php echo $bank['key']; ?></option>
-                                <?php endforeach; ?>
-                            </optgroup>
-                        <?php endif; ?>
-                    </select>
-                </div> <!-- /.form-group -->
-                
-            </div> <!-- /.col-md-4 -->
-            <div class="col-md-8">
+            </div>
             
-            	<div id="bank_info">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="bank_name" class="control-label">Banka Adı</label>
-                                <div class="input-prepend input-group">
-                                    <span class="input-group-addon"><span class="fa fa-font"></span></span>
-                                    <input type="text" id="bank_name" name="bank_name" class="form-control" minlength="2" maxlength="50" value="<?php echo $form['val_2']; ?>">
-                                </div>
-                            </div> <!-- /.form-group -->
-                        </div> <!-- /.col-md-6 -->
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="branch_code" class="control-label">Şube Adı veya Kodu</label>
-                                <div class="input-prepend input-group">
-                                    <span class="input-group-addon"><span class="fa fa-font"></span></span>
-                                    <input type="text" id="branch_code" name="branch_code" class="form-control" value="<?php echo $form['val_3']; ?>">
-                                </div>
-                            </div> <!-- /.form-group --> 
-                        </div> <!-- /.col-md-6 -->
-                    </div> <!-- /.row -->
-                    
-                </div> <!-- /#bank_info --> 
+            <div class="h20"></div>
+            <div>
+            	<address>
+                  <strong><?php echo $form['name_surname']; ?></strong><br>
+                  <?php echo $form['address']; ?><br>
+                  <?php echo $form['county']; ?> <?php echo $form['city']; ?><br>
+                  <abbr title="Phone">Tel:</abbr> <?php echo $form['gsm']; ?>
+                </address>
+                <div class="h20"></div>
+                <table class="table table-bordered">
+                	<thead>
+                    	<tr>
+                        	<th width="100">İŞLEM</th>
+                            <th width="150">İŞLEM NO</th>
+                            <th width="300">BANKA ADI</th>
+                            <th>ŞUBE</th>
+                            <th>VADE TARİHİ</th>
+                            <th>TOPLAM</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    	<tr>
+                        	<td><?php echo get_text_payment_type($form['val_1']); ?></td>
+                            <td><?php echo $form['val_4']; ?></td>
+                            <td><?php echo $form['val_2']; ?></td>
+                            <td><?php echo $form['val_3']; ?></td>
+                            <td><?php if($form['val_date'] > 0): ?><?php echo substr($form['val_date'],0,10); ?><?php endif; ?></td>
+                            <td class="text-right"><?php echo get_money($form['grand_total']); ?> <i class="fa fa-try"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
                 
-                <div id="cheque_info">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="fall_due_on" class="control-label">Vade Tarihi</label>
-                                <div class="input-prepend input-group">
-                                    <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                                    <input type="text" id="fall_due_on" name="fall_due_on" class="form-control   required datepicker pointer" placeholder="<?php lang('Fall Due On'); ?>" minlength="3" maxlength="50" value="<?php echo $form['val_4']; ?>" readonly>
-                                </div>
-                            </div> <!-- /.form-group -->
-                        </div> <!-- /.col-md-6 -->
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="serial_no" class="control-label">Seri/İşlem No</label>
-                                <div class="input-prepend input-group">
-                                    <span class="input-group-addon"><span class="fa fa-text-width"></span></span>
-                                    <input type="text" id="serial_no" name="serial_no" class="form-control" value="<?php echo $form['val_5']; ?>">
-                                </div>
-                            </div> <!-- /.form-group --> 
-                        </div> <!-- /.col-md-6 -->
-                    </div> <!-- /.row -->
-                    
-                </div> <!-- /#cheque_info --> 
-                <div class="form-group">
-                    <label for="description" class="control-label">Açıklama</label>
-                    <div class="input-prepend input-group">
-                        <span class="input-group-addon"><span class="fa fa-text-width"></span></span>
-                        <input type="text" id="description" name="description" class="form-control" minlength="3" maxlength="50" value="<?php echo $form['description']; ?>">
+                <?php if($form['description'] != ''): ?>
+                    <div class="h20"></div>
+                    <div>
+                    	<i class="fa fa-quote-left"></i> AÇIKLAMA: <span class="text-muted"><?php echo $form['description']; ?></span>
                     </div>
-                </div> <!-- /.form-group --> 
-            </div> <!-- /.col-md-8 -->
-        </div> <!-- /.row -->
-        
-        
-        <div class="h20"></div>
-        <div class="text-right">
-            <input type="hidden" name="log_time" value="<?php echo logTime(); ?>" />
-            <input type="hidden" name="update" />
-            <button class="btn btn-default">Güncelle &raquo;</button>
-        </div> <!-- /.text-right -->
-    </form>
- 
-
-<script>
-/* odeme turu yani "nakit,çek,banka havalesi" gibi değerler değiştiğinde gösterilecek kutular */
-$.paymentTypeChange() = function (){
-	$('#serial_no').removeClass('required');
-	
-	if($('#payment_type').val() == 'cheque')
-	{ 
-		$('#bank_info').show('blonde'); 
-		$('#cheque_info').show('blonde'); 
-		
-		$('#optgroup_cashbox').removeAttr('disabled'); 
-		$('#serial_no').addClass('required');
-	}
-	else if($('#payment_type').val() == 'bank_transfer')
-	{ 
-		$('#bank_info').show('blonde'); 
-		$('#cheque_info').hide('blonde'); 
-		
-		$('#optgroup_cashbox').attr('disabled', 'disabled'); 
-		$('#optgroup_cashbox option').removeAttr('selected'); 
-	}
-	else
-	{ 
-		$('#bank_info').hide('blonde'); 
-		$('#cheque_info').hide('blonde'); 
-		
-		$('#optgroup_cashbox').removeAttr('disabled'); 
-	}
-}
-$('#payment_type').change(function() {
-	$.paymentTypeChange();
-});
-$.paymentTypeChange();
+                <?php endif; ?>
+                
+                <div class="h20"></div>
+                <div class="text-right text-muted">
+                	<?php $user = get_user($form['user_id']); ?>
+                	Bu işlemler <?php echo $user['name']; ?> <?php echo $user['surname']; ?> tarafından yapılmıştır.
+                </div>
+                
+            </div>
+        </div> <!-- /.panel -->
+    </div> <!-- /.text-center -->
 
 
-
-/* odeme kutularinin hesaplanmasi icin kullanilmaktadir */
-function calc_payment()
-{
-	var old_balance = $('#old_balance').val(); old_balance = old_balance.replace(',','');
-	var cashbox_old_balance = $('#cashbox_old_balance').val(); old_balance = old_balance.replace(',','');
-	var payment = $('#payment').val();
-	
-	if(old_balance == ''){old_balance = 0;}
-	if(payment == ''){payment = 0;}
-	
-	<?php if($form['in_out'] == 'in'): ?>
-		var new_balance = parseFloat(old_balance) - parseFloat(payment);
-		var new_cashbox_balance = parseFloat(cashbox_old_balance) + parseFloat(payment);
-		$('#new_balance').val(parseFloat(new_balance).toFixed(2));
-		$('#cashbox_new_balance').val(parseFloat(new_cashbox_balance).toFixed(2));
-	<?php else: ?>
-		var new_balance = parseInt(old_balance) + parseFloat(payment);
-		var new_cashbox_balance = parseFloat(cashbox_old_balance) - parseFloat(payment);
-		$('#new_balance').val(parseFloat(new_balance).toFixed(2));
-		$('#cashbox_new_balance').val(parseFloat(new_cashbox_balance).toFixed(2));
-	<?php endif; ?>
-}
-
-
-
-/* islem turu secimi */
-$.transaction_type_change = function() {
-	$('#transaction_type_manual').hide();
-	$('#transaction_type_account').hide();
-	if($('#transaction_type').val() == 'account')
-	{
-		$('#transaction_type_manual').hide('');
-		$('#transaction_type_account').show('slide');
-		
-		$('#account_id').addClass('required');	
-		$('#account_name').addClass('required');	
-		
-		$('#name_surname').removeClass('required');	
-	}
-	else if($('#transaction_type').val() == 'manual')
-	{
-		$('#transaction_type_account').hide('');
-		$('#transaction_type_manual').show('slide');
-		
-		$('#account_id').removeClass('required');	
-		$('#account_name').removeClass('required');	
-		
-		$('#name_surname').addClass('required');	
-	}
-	else
-	{
-		return false;
-	}	
-}
-
-
-
-$('#transaction_type').change(function() {
-	$.transaction_type_change();
-});
-
-
-
-$(document).ready(function(e) {
-	/* hesap kartlarinin ajax aranmasi için kullanıacak fonksiyon */
-	$('#account_name').keyup(function() {
-		$('.typeHead').show();
-		$.get("../search_account/"+$(this).val()+"", function( data ) {
-		  $('.search_account').html(data);
-		});
-	});
-	
-	/* sayfa ilk yuklendiğinde kapanacak bölümler */
-	$('#bank_info').hide();
-	$('#cheque_info').hide();
-	$.transaction_type_change();
-});
-</script>
-
-
-
-
-</div> <!-- /.col-md-8 -->
-<div class="col-md-4">
-	
-</div> <!-- /.col-md-4 -->
+</div> <!-- /.col-md-12 -->
 </div> <!-- /.row -->
 
 <div class="h20"></div>

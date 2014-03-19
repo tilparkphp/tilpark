@@ -26,6 +26,17 @@ $(document).ready( function() {
 		$('.typeHead').hide();
 	});
 	
+	
+	/* notify mesaj kutuları */
+	$('.notifyBox').hide();
+	$('.notifyBox').show('slide', {direction:'right'});
+	$('.notify').click(function() {
+		$(this).hide('blind');
+	});
+	setTimeout(function() {
+		$('.notify').hide('slide', {direction:'right'});
+	}, 9000);
+	
 });
 
 

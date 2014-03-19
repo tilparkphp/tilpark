@@ -116,6 +116,22 @@ function get_options($data, $array=array())
 
 
 
+
+function error_page_message($title,$code,$message, $array=array())
+{
+	?>
+    <div class="error-page">
+		<?php echo $title; ?>
+        <span class="error-code"><?php echo $code; ?></span>
+		<small><?php echo $message; ?></small>
+    </div>
+    <?php
+}
+
+
+
+
+
 /*	selected item selected
 	input[type=select] türündeki nesneler için otomatik seçici fonksiyon */
 function selected($val1, $val2)
@@ -531,8 +547,8 @@ function calc_cahsbox($cahsbox_id='')
 
 function get_text_payment_type($text)
 {
-	if($text == 'cash'){return 'Nakit';}
-	if($text == 'cheque'){return 'Banka Çeki';}
-	if($text == 'bank_transfer'){return 'Havale/EFT';}
+	if($text == 'cash'){return 'NAKİT';}
+	if($text == 'cheque'){return 'BANKA ÇEKİ';}
+	if($text == 'bank_transfer'){return 'HAVALE/EFT';}
 }
 ?>

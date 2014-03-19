@@ -2,10 +2,10 @@
 	<li><a href="<?php echo site_url(''); ?>">Yönetim Paneli</a></li>
 	<li><a href="<?php echo site_url('payment'); ?>">Kasa</a></li>
     <li><a href="<?php echo site_url('payment/cashbox'); ?>">Kasa Yönetimi</a></li>
-	<li class="active"><?php echo $cashbox['key']; ?> Detayları</li>
+	<li class="active"><?php echo $bank['key']; ?> Detayları</li>
 </ol>
 
-<h3 class="title"><i class="fa fa-puzzle-piece"></i> <?php echo $cashbox['key']; ?></h3>
+<h3 class="title"><i class="fa fa-puzzle-piece"></i> <?php echo $bank['key']; ?></h3>
 
 <table class="table table-bordered table-hover table-condensed dataTable fs-12">
 	<thead>
@@ -19,8 +19,8 @@
             <th width="50">Kullanıcı</th>
             <th>Açıklama</th>
             <th>Diğer</th>
-            <th width="80">Tahsilat</th>
-            <th width="80">Ödeme</th>
+            <th width="80">Giriş</th>
+            <th width="80">Çıkış</th>
             <th width="80">Ara Toplam</th>
         </tr>
     </thead>
@@ -61,7 +61,7 @@
     </tbody>
     <tfoot>
     	<tr>
-        	<td colspan="9" class="text-right fs-20">KASA BAKİYESİ:</td>
+        	<td colspan="9" class="text-right fs-20">BANKA BAKİYESİ:</td>
         	<td colspan="2" class="text-right"><span class="text-danger fs-20"><?php echo get_money($sub_total); ?> <i class="fa fa-try"></i></span></td>
         </tr>
     </tfoot>

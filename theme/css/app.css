@@ -8,7 +8,7 @@
 }
 
 body {
-	font-family: Open Sans, Helvetica, Arial, sans-serif;
+	font-family: 'Open Sans Condensed', sans-serif !important;
 	font-weight: normal;
 	font-style: normal;
 	font-size: 13px;
@@ -89,6 +89,46 @@ h2, h3, h4 {
 .gray { color:#ccc !important; }
 
 /* yardımcı değişkenler */
+.panel-form {
+	padding:20px;
+	background-color:#fff;
+	border-radius:5px;
+	border:1px solid #e5e5e5;
+}
+.panel-form .panel-body-heading h3 {
+	margin:0px;
+	font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	text-shadow:none !important;
+}
+.panel-form .panel-body-heading.bordered{
+	border: none;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+	margin-bottom:20px;
+}
+.panel-form address {
+	font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+.panel-form table {
+	width:100%;
+}
+.panel-form table thead {
+	background:none;
+}
+.panel-form table thead tr th {
+	background:none !important;
+	font-weight:bold;
+	border-bottom:2px solid #ccc;;
+}
+
+.center-block {
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+}
+.center-box {
+	width: 85%;
+	min-width: 85%;
+}
 .note {
 	background-color: rgb(233, 233, 233);
 	border: 1px solid rgb(214, 207, 207);
@@ -470,7 +510,7 @@ a.logo .subtext {
 
 .widget .header {
 	font-family: 'Ubuntu', sans-serif !important;
-	font-size:13px;
+	font-size:14px;
 	min-height: 30px;
 	background-color: #f5f5f5;
 	border-top: 1px solid #e8e8e8;
@@ -487,7 +527,8 @@ a.logo .subtext {
 
 }
 .widget .header .fa {
-	font-size:16px;
+	font-size:18px;
+	margin-right:5px;
 }
 .widget .header.gray1 {
 	background-color: #9faab0;
@@ -616,6 +657,103 @@ a.logo .subtext {
 }
 .row.stat small span {
     margin-top:10px;
+}
+
+
+
+
+
+
+
+.error-page {
+	font-size: 10em;
+	text-align: center;
+	margin-bottom: 60px;
+	margin-top:80px;
+	color: #34495e;
+	text-shadow: rgb(215, 218, 219) 1px 1px,
+	 rgb(215, 218, 219) 2px 2px,
+	 rgb(215, 218, 219) 3px 3px,
+	 rgb(216, 219, 220) 4px 4px;
+}
+.error-page .error-code {
+	color: #e74c3c;
+}
+.error-page small {
+	font-size: 20px;
+	display: block;
+	text-shadow: none;
+	color: #34495e;
+	margin-top:60px;
+}
+
+
+
+.notifyBox {
+	position:fixed;
+	right:20px;
+	margin-top:50px;
+	z-index:9999;
+}
+.notify {
+	display:block;
+	padding:10px;
+	color: #3c763d;
+	box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+	width:260px;
+	max-width:260px;
+	min-width:260px;
+	cursor:pointer;
+	clear:both;
+	margin-bottom:10px;
+}
+.notify h3 {
+	margin:0px;
+	padding:0px;
+	line-height:16px;
+	margin-bottom:4px;
+	font-size:16px;
+	text-shadow:none;
+	border-color: #d6e9c6;
+}
+.notify p {
+	padding:0px;
+	margin:0px;
+}
+.notify .btn-close {
+	background:none;
+	border:0px solid #f00;
+	float:right;
+}
+.notify-error {
+	color: #a94442;
+	background-color: #f2dede;
+	border:1px solid #ebccd1;
+}
+.notify-danger {
+	color: #a94442;
+	background-color: #f2dede;
+	border:1px solid #ebccd1;
+}
+.notify-success {
+	color:#3c763d;
+	background-color: #dff0d8;
+	border:1px solid #d6e9c6;
+}
+.notify-info {
+	color: #31708f;
+	background-color: #d9edf7;
+	border:1px solid ##bce8f1;
+}
+.notify-warning {
+	color: #8a6d3b;
+	background-color: #fcf8e3;
+	border-color: #faebcc;
+}
+.notify-note {
+	color: rgb(82, 82, 82);
+	background-color: rgb(233, 233, 233);
+	border-color: rgb(214, 207, 207);
 }
 
 
@@ -791,6 +929,33 @@ blockquote {
 }
 .datepicker {
 	cursor:pointer !important;
+}
+/* collapse */
+.panel {
+	border:0px;
+	border-radius:0px;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+.panel-heading {
+	border-radius:0px;
+	padding:5px 10px;
+	
+}
+.panel-group .panel {
+	border-radius:0px;
+}
+.panel-title {
+	font-size: 13px;
+	text-shadow:none;
+}
+.panel-title a:hover {
+	text-decoration:none;
+	
+}
+.panel-body {
+	padding:10px;
+	font-size:12px;
 }
 
 
@@ -1362,6 +1527,9 @@ label {
 	margin:0px;
 	color:#000;
 	font-weight:400;
+	font-family: 'Ubuntu', sans-serif !important;
+	color:#4d4d4d;
+	
 }
 .input-lg {
 	border-radius: 2px !important;

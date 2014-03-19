@@ -1,3 +1,4 @@
+
 <ol class="breadcrumb">
 	<li><a href="<?php echo site_url(''); ?>">Yönetim Paneli</a></li>
 	<li><a href="<?php echo site_url('payment'); ?>">Kasa</a></li>
@@ -76,10 +77,14 @@
 			if($('#type').val() == 'bank')
 			{ 
 				$('.bank_detail').show('blonde'); 
+				$('#branch_code').addClass('required');
+				$('#account_no').addClass('required');
 			}
 			else
 			{ 
 				$('.bank_detail').hide('blonde'); 
+				$('#branch_code').removeClass('required');
+				$('#account_no').removeClass('required');
 			}
 		});
 		</script>
@@ -145,14 +150,14 @@
                 	<td width="34">
                     	<a href="?set&delete=true&cashbox_id=<?php echo $cashbox['id']; ?>" class="btn btn-default btn-xs" title="Sil"><i class="fa fa-trash-o text-danger"></i></a>
                     </td>
-                    <td title="<?php echo $cashbox['val_4']; ?>"><?php echo $cashbox['key']; ?> <?php if($cashbox['val_1']): ?><small class="text-muted">(varsayılan)</small><?php endif; ?></td>
+                    <td title="<?php echo $cashbox['val_4']; ?>"><a href="<?php echo site_url('payment/cashbox/'.$cashbox['id']); ?>"><?php echo $cashbox['key']; ?></a></td>
                     <td><?php echo $cashbox['val_2']; ?></td>
                     <td><?php echo $cashbox['val_3']; ?></td>
                     <td class="text-right"><?php echo get_money($cashbox['val_decimal']); ?> <small>TL</small></td>
                 </tr>
             <?php endforeach; ?>
             <?php else: ?>
-            	<?php alertbox('alert-warning', 'Kasa bulunamadı', 'Tahsilat ve ödeme işlemleriniz için bir kasa oluşturmalısın.'); ?>
+            	<?php alertbox('alert-warning', 'Banka bulunamadı', 'Tahsilat ve ödeme işlemlerin için bir banka hesabı oluşturmalısın.'); ?>
             <?php endif; ?>
         </tbody>
     </table>

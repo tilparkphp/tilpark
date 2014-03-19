@@ -27,7 +27,13 @@
         	<td class="fs-11"><a href="<?php echo site_url('payment/view/'.$form['id']); ?>">#<?php echo $form['id']; ?></a></td>
             <td class="fs-11"><?php echo substr($form['date'],0,16); ?></td>
             <td class="fs-11"><?php echo get_text_in_out($form['in_out']); ?></td>
-            <td><a href="<?php echo site_url('account/view/'.$form['account_id']); ?>" target="_blank"><?php echo $accounts[$form['account_id']]['name']; ?></a></td>
+            <td>
+            	<?php if($form['account_id'] > 0): ?>
+                	<a href="<?php echo site_url('account/view/'.$form['account_id']); ?>" target="_blank"><?php echo $form['name']; ?></a>
+            	<?php else: ?>
+                	<?php echo $form['name']; ?>
+                <?php endif; ?>
+            </td>
             <td><?php echo get_text_payment_type($form['val_1']); ?></td>
             <td><?php echo $form['val_2']; ?></td>
             <?php if($form['in_out'] == 'in'): ?>

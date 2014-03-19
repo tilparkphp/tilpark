@@ -10,17 +10,17 @@
 	</li>
 </ol>
 
+<?php if(!$cashboxs): ?>
+	<?php alertbox('alert-warning', 'Kasa bulunamadı!', 'Ödeme hareketleri ekleyebilmen için kasaya ihtiyacın var. Lütfen yeni bir kasa ekleyin.', false); ?>
+	<?php return false; ?>
+<?php endif; ?>
 
 <div class="row">
 <div class="col-md-8">
 
-	<?php
-	if(@$formError) { alertbox('alert-danger', $formError);	 }
-	echo @$alert['success'];
-	?>
 
     <form name="form_new_product" id="form_new_product" action="" method="POST" class="validation">
-        <h3><i class="fa fa-puzzle-piece"></i> Yeni Ödeme - <?php if(isset($_GET['in'])): ?>
+        <h3><i class="fa fa-puzzle-piece"></i> Yeni Kasa Hareketi - <?php if(isset($_GET['in'])): ?>
             Tahsilat
         <?php else: ?>
             Ödeme
@@ -37,7 +37,7 @@
                 </div> <!-- /.form-group -->
                 
                 <div class="form-group">
-                	<label for="transaction_type" class="control-label">İşlem Gurubu</label>
+                	<label for="transaction_type" class="control-label">İşlem Türü</label>
                     <select name="transaction_type" id="transaction_type" class="form-control">
                     	<option value="account">Cari Hesap</option>
                         <option value="manual">Manuel</option>
@@ -104,7 +104,7 @@
                         </div> <!-- /.col-md-6 -->
                         <div class="col-md-6">
                         	<div class="form-group">
-                            	<label for="name_surname" class="control-label">Yetkili Ad Soyad</label>
+                            	<label for="name_surname" class="control-label">Ad Soyad</label>
                                 <div class="input-prepend input-group">
                                 	<span class="input-group-addon pointer"><i class="fa fa-text-width"></i></span>
                                 	<input type="text" name="name_surname" id="name_surname" class="form-control" value="" autocomplete="off" />
@@ -129,7 +129,7 @@
                             <label for="payment" class="control-label">Ödeme Tutarı</label>
                             <div class="input-prepend input-group">
                                 <span class="input-group-addon"><span class="fa fa-try"></span></span>
-                                <input type="text" id="payment" name="payment" class="form-control required number" placeholder="0.00" maxlength="10" value="" onkeypress="calc_payment();" onkeyup="calc_payment();">
+                                <input type="text" id="payment" name="payment" class="form-control required number" required="required" placeholder="0.00" maxlength="10" value="" onkeypress="calc_payment();" onkeyup="calc_payment();">
                             </div>
                         </div> <!-- /.form-group -->
                     </div> <!-- /.col-md-4 -->
@@ -222,6 +222,93 @@
 </div> <!-- /.col-md-8 -->
 <div class="col-md-4">
 	
+    <div class="widget">
+    	<div class="header"><i class="fa fa-question-circle"></i> Açıklama</div>
+        <div class="content">
+       	
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse-1">
+                                Para alma ve verme işlemlerinde hesap kartları...
+                            </a>
+                        </h4>
+                    </div> <!-- /.panel-heading -->
+                    <div id="collapse-1" class="panel-collapse collaps in">
+                        <div class="panel-body">
+                            Buradaki panel ile kasa/banka giriş ve çıkışlarını ekleyebilirsin. Para alabilir veya para verebilirsin. 
+                            <br />
+                            Kasa/banka hareketlerinde hesap kartlarında seçim yapabilirsin. Bu sayede hesap kartlarının <strong>bakiyeleri</strong> artacak veya azalacaktır.
+                        </div>
+                    </div> <!-- /.panel-collapse -->
+                </div> <!-- /.panel -->
+                
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse-2">
+                                Masraf ödemeleri nasıl eklenir?
+                            </a>
+                        </h4>
+                    </div> <!-- /.panel-heading -->
+                    <div id="collapse-2" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <strong>İşlem türü</strong> bölümünden <strong>Manuel</strong> ödeme seçildiğinde, hesap kartları etkilenmez. Fakat kasa/banka hareketleri etklenir. Yani kasanızdan para girişi ve çıkışı olur. Manuel işlemler genellikle Gider harcamaları, elektrik, su, doğalgaz, internet vb. gibi ödemeler için kullanılır. 
+                    <br />
+                    Ayrıca hesap kartı açmadan, para girişi ve çıkışı yaptığınız işlemlerde Manuel ödemeler sekmesini seçebilirsiniz.
+                        </div>
+                    </div> <!-- /.panel-collapse -->
+                </div> <!-- /.panel -->
+                
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse-3">
+                                Şirket sahibi kasadaki tüm parayı aldı?
+                            </a>
+                        </h4>
+                    </div> <!-- /.panel-heading -->
+                    <div id="collapse-3" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            Kasada/bankada para birikti ve <strong>şirket sahibi</strong> tüm parayı almak istedi, bu durumda <strong>şirket sahibi</strong> için hesap kart açamazsın. Çünkü para verdiğin zaman hesap kartı bakiyesi borçlu gözükecektir. Bu gibi durumlarda manuel işlem türünü seçmen önerilir. Açıklama kısmına uygun bir açıklama yazman yeterli olacaktır.
+                        </div>
+                    </div> <!-- /.panel-collapse -->
+                </div> <!-- /.panel -->
+                
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse-4">
+                                Kasa/banka hareketlerini değiştirebilir miyim?
+                            </a>
+                        </h4>
+                    </div> <!-- /.panel-heading -->
+                    <div id="collapse-4" class="panel-collapse collapse">
+                        <div class="panel-body">
+                           Kasa/banka hareketleri bir kere eklendikten sonra değişmez. Fakat silinebilir.
+                        </div>
+                    </div> <!-- /.panel-collapse -->
+                </div> <!-- /.panel -->
+                
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse-5">
+                                Personel maaşlarını nasıl ödeyebilirim?
+                            </a>
+                        </h4>
+                    </div> <!-- /.panel-heading -->
+                    <div id="collapse-5" class="panel-collapse collapse">
+                        <div class="panel-body">
+                           Personel maaşlarını ödemek için işlem türü bölümünden manuel işlem sekmesine tıklayın ve menuel ödeme çıkışı yapın.
+                        </div>
+                    </div> <!-- /.panel-collapse -->
+                </div> <!-- /.panel -->        
+        	</div> <!-- /.panel-group -->   
+        </div> <!-- /.content -->
+    </div> <!-- /.widget -->
+    
 </div> <!-- /.col-md-4 -->
 </div> <!-- /.row -->
 
@@ -268,6 +355,7 @@ $.changeCashbox = function() {
 		cashboxArray[<?php echo $bank['id']; ?>] = "<?php echo $bank['val_decimal']; ?>";
 	<?php endforeach; ?>
 	$('#cashbox_old_balance').val(parseFloat(cashboxArray[cashbox_id]).toFixed(2));
+	calc_payment();
 }
 $('#cahsbox').change(function() { $.changeCashbox(); });
 
@@ -313,7 +401,7 @@ $.transaction_type_change = function() {
 		$('#account_id').addClass('required');	
 		$('#account_name').addClass('required');	
 		
-		$('#name_surname').removeClass('required');	
+		$('#name').removeClass('required');	
 	}
 	else if($('#transaction_type').val() == 'manual')
 	{
@@ -323,7 +411,7 @@ $.transaction_type_change = function() {
 		$('#account_id').removeClass('required');	
 		$('#account_name').removeClass('required');	
 		
-		$('#name_surname').addClass('required');	
+		$('#name').addClass('required');	
 	}
 	else
 	{
@@ -333,7 +421,12 @@ $.transaction_type_change = function() {
 $('#transaction_type').change(function() { $.transaction_type_change(); });
 
 
-
+function account_click(click_item)
+{
+	$('#account_id').val($(click_item).find('.select_account').attr('data-id'));
+    $('#account_name').val($(click_item).find('.select_account').attr('data-name'));
+	$('#old_balance').val($(click_item).find('.select_account').attr('data-balance'));
+}
 
 $(document).ready(function(e) {
 	

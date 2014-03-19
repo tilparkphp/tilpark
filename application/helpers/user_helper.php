@@ -42,9 +42,15 @@ function update_user($user_id, $data)
 function get_user($data)
 {
 	$ci =& get_instance();
-	
-	if(isset($data['id'])){$ci->db->where('id', $data['id']);}
-	if(isset($data['email'])){$ci->db->where('email', $data['email']);}
+	if(is_array($data))
+	{
+		if(isset($data['password'])) {unset($data['password']);}
+		$ci->db->where($data);
+	}
+	else
+	{
+		$ci->db->where('id', $data);
+	}
 	$query = $ci->db->get('users')->row_array();
 	if($query)
 	{

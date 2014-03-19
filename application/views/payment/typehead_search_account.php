@@ -38,9 +38,6 @@
 
 <script>
 $('.tr_click').click(function() {
-    $('#account_id').val($(this).find('.select_account').attr('data-id'));
-    $('#account_name').val($(this).find('.select_account').attr('data-name'));
-	$('#old_balance').val($(this).find('.select_account').attr('data-balance'));
+	account_click(this); 
 });
-
 </script>

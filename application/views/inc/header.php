@@ -28,6 +28,7 @@ if($this->session->userdata('login') == false)
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="<?php echo base_url('theme/js/jquery.js'); ?>"></script>
+<script src="<?php echo base_url('theme/js/jquery-ui-1.10.4.custom.js'); ?>"></script>
 <script src="<?php echo base_url('theme/js/bootstrap.js'); ?>"></script> 
 <script src="<?php echo base_url('theme/js/jquery.validation.js'); ?>"></script> 
 
@@ -40,7 +41,6 @@ if($this->session->userdata('login') == false)
 
 <script src="<?php echo base_url('theme/js/lightbox-2.6.min.js'); ?>"></script>
 
-<script src="<?php echo base_url('theme/js/bootstrap-notify.js'); ?>"></script>
 <!-- Initialize JS Plugins -->
 <script src="<?php echo base_url('theme/js/app.js'); ?>"></script>
 
@@ -242,11 +242,7 @@ $(document).ready( function() {
             </div>
             
             <div class="liner navbar-right"></div>
-            
-          
-          
-          	
-          
+
         </div>
         
         
@@ -453,3 +449,24 @@ $(document).ready(function(e) {
 
 
 
+<div class="notifyBox">
+
+<?php if(@$formError): ?>
+    <div class="notify notify-error">
+        <p><?php echo $formError; ?></p>
+    </div>
+<?php endif; ?>
+
+<?php if(@$messages): ?>
+	<?php foreach($messages as $message): ?>
+        
+        <div class="notify notify-<?php echo $message['class']; ?>">
+        	<button class="btn-close"><i class="fa fa-times"></i></button>
+            <?php if(isset($message['title'])): ?><h3><?php echo $message['title']; ?></h3><?php endif; ?>
+            <?php if(isset($message['description'])): ?><p><?php echo $message['description']; ?></p><?php endif; ?>
+        </div>
+        
+        
+    <?php endforeach; ?>
+<?php endif; ?>
+</div>

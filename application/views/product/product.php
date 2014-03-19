@@ -9,19 +9,7 @@
 
 
 <?php if(@$product_card_not_found): ?>
-    <div class="row">
-    	<div class="col-md-3">
-    		<img src="<?php echo base_url('theme/img/logo/256x256.png'); ?>" class="img-responsive" />
-    	</div> <!-- /.col-md-3 -->
-        <div class="col-md-9">
-        	<h3 class="line">Stok Kartı Bulunamadı!</h3>
-            <ul class="sugar">
-            	<li>Aradığın stok kartı bulunamadı.</li>
-            	<li>Ürün ID numarası yada stok barkod kodu yanlış olabilir.</li>
-            	<li>Ürün ID numarası yada stok barkod kodu yanlış olabilir.</li>
-            </ul>
-        </div> <!-- /.col-md-9 -->
-    </div> <!-- /.row -->
+    <?php error_page_message('HATA', '404', '<strong>dur!</strong> aradığın ürün kartı bulunamadı'); ?>
 <?php else: ?>
 
 
